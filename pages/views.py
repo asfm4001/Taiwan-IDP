@@ -7,11 +7,14 @@ def index(request):
 def about(request):
     return render(request, 'pages/about.html')
 
-def contact(request):
-    return render(request, 'pages/contact.html')
-
 def services(request):
     return render(request, 'pages/services.html')
 
+def cases(request):
+    return render(request, 'pages/cases.html')
+
 def faqs(request):
     return render(request, 'pages/faqs.html')
+
+def contact(request):
+    return render(request, 'pages/contact.html')

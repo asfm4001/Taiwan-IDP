@@ -3,18 +3,17 @@
       <li><a href="{% url 'pages:about' %}" class="{% if request.path == '/about/' %}active{% endif %}">關於我們</a></li>
       <li class="dropdown"><a href="{% url 'pages:services' %}" class="{% if request.path == '/services/' %}active{% endif %}"><span>技術服務</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
         <ul>
-          <li><a href="#">Service 1</a></li>
-          <li><a href="#">Service 2</a></li>
-          <li><a href="#">Service 3</a></li>
-          <li><a href="#">Service 4</a></li>
+          <li><a href="#">透地雷達探測</a></li>
+          <li><a href="#">地電阻探測</a></li>
+          <li><a href="#">地質鑽探及簽證</a></li>
+          <li><a href="#">電磁波感測</a></li>
         </ul>
       </li>
-      <li class="dropdown"><a href="#" class="{% if request.path == '/about/' %}active{% endif %}"><span>案例實績</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+      <li class="dropdown"><a href="{% url 'pages:cases' %}" class="{% if request.path == '/cases/' %}active{% endif %}"><span>案例實績</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
         <ul>
-          <li><a href="#">Dropdown 1</a></li>
-          <li><a href="#">Dropdown 2</a></li>
-          <li><a href="#">Dropdown 3</a></li>
-          <li><a href="#">Dropdown 4</a></li>
+          <li><a href="#">污染調查</a></li>
+          <li><a href="#">建築基地調查</a></li>
+          <li><a href="#">地質鑽探及判釋</a></li>
         </ul>
       </li>
       <li><a href="{% url 'pages:faqs' %}" class="{% if request.path == '/faqs/' %}active{% endif %}">常見問題</a></li>
