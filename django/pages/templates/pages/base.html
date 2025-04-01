@@ -4,14 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>{% block titile %}{% endblock %} - Demo地質技師事務所</title>
+  <title>{% block titile %}{% endblock %} - 台灣整合防災工程技術顧問有限公司</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
   <!-- Favicons -->
   {% load static %}
-  <link href="{% static 'pages/assets/img/favicon.png' %}" rel="icon">
-  <link href="{% static 'pages/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+  <link href="{% static 'pages/assets/img/台整LOGO.png' %}" rel="icon">
+  <!-- <link href="{% static 'pages/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -45,16 +45,15 @@
 
       <a href="{% url 'pages:index' %}" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="{% static 'pages/assets/img/logo.png' %}" alt=""> -->
-        <h1 class="sitename" style="font-family: 'Microsoft JhengHei', sans-serif;">Demo地質技師事務所</h1>
+        <img src="{% static 'pages/assets/img/台整LOGO.png' %}" alt="">
+        <h1 class="sitename" style="font-family: 'Microsoft JhengHei', sans-serif;">台灣整合防災工程技術顧問</h1>
       </a>
 
       <!-- Navbar -->
       {% include 'pages/navbar.html' %}
 
       <div class="header-social-links">
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="https://line.me/ti/p/OorcIN5Rdf#~" class="line"><i class="bi bi-line"></i></a>
       </div>
 
     </div>
