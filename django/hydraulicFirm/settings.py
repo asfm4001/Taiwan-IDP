@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages.apps.PagesConfig',
+    'estimates.apps.EstimatesConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,15 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'hydraulicFirm.urls'
 
 TEMPLATES = [
+    # {
+    #     'BACKEND': 'django.template.backends.jinja2.Jinja2',
+    #     'DIRS': [BASE_DIR / 'jinja2_templates'],
+    #     'APP_DIRS': True,
+    #     'OPTIONS': {
+    #         'environment': "hydraulicFirm.jinja2_env.environment",
+    #         'autoescape': True,
+    #     },
+    # },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],

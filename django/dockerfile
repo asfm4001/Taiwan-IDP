@@ -2,17 +2,17 @@
 FROM python
 
 # Work DIR
-WORKDIR /srv/django
+WORKDIR /home/django
 
 # 複製本地 -> container工作目錄
-COPY . .
+# COPY . .
 
 # pip更新與安裝相關套件
-RUN pip install --upgrade pip \
-&& pip install -r requirements.txt
+# RUN pip install --upgrade pip \
+# && pip install -r requirements.txt
 
 # 開放8000連接至container
 EXPOSE 8000
 
 # 設定當run images自動執行命令
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8000", "hydraulicFirm.wsgi"]
+# CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8000", "hydraulicFirm.wsgi"]
