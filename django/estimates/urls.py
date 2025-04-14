@@ -5,4 +5,6 @@ app_name = 'estimates'
 urlpatterns = [
     path('', views.index, name='index'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
+    path('pdf/<int:order_no>/', views.pdf, name='pdf'),
+    # path('pdf1/', views.generate_pdf, name='pdf1')
 ]

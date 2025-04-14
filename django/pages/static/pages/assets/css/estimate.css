@@ -1,4 +1,10 @@
+@font-face {
+    font-family: "m_sk";
+    src: url("file:///home/django/pages/static/pages/assets/fonts/m_sk.ttf");
+}
+
 body{
+    font-family: "m_sk", sans-serif;
     margin-top:20px;
     color: #484b51;
 }
