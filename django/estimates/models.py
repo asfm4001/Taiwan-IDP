@@ -15,13 +15,10 @@ class Client(models.Model):
     
 class Product(models.Model):
     product_name = models.CharField('施工品項', max_length=60)
-    product_unit = models.IntegerField('單位')
     product_price = models.IntegerField('單價')
 
     def __str__(self):
         return self.product_name
-    def calculate_amount(self):
-        return self.product_unit*self.product_price
 
 class Order(models.Model):
     status_list = {
@@ -31,8 +28,7 @@ class Order(models.Model):
         '未結案'
     }
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    # product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, through='OrderProduct')
     order_address = models.CharField('施作地址', max_length=60)
     order_status = models.CharField('訂單狀態', max_length=10, default='未啟動')
     order_date = models.DateField('訂單日期')
@@ -47,12 +43,20 @@ class Order(models.Model):
     def __str__(self):
         return self.order_address
     def calculate_total_amount(self):
-        self.order_amount = 0
-        for product in self.products.all():
-            self.order_amount += product.calculate_amount()
+        total = 0
+        for op in self.orderproduct_set.all():  # 注意：透過中介模型關聯的用法
+            total += op.get_subtotal()
+        self.order_amount = total
         self.save()
-        return self.order_amount
-    # def order_status(self, status_list):
-    #     return status_list[str(self.order_status)]
+        return total
 
-    
+class OrderProduct(models.Model):
+    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    quantity = models.IntegerField('數量', default=1)
+
+    def get_subtotal(self):
+        return self.quantity * self.product.product_price
+
+    def __str__(self):
+        return f"{self.order} - {self.product} x {self.quantity}"

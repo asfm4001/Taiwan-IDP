@@ -7,10 +7,15 @@ def index(request):
     return render(request, 'estimates/index.html')
 
 class DetailView(generic.DetailView):
-    for order in Order.objects.all():
-        order.order_amount = order.calculate_total_amount()
     model = Order
     template_name = 'estimates/detail.html'
+    
+    # overwrite default
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        order = self.get_object()
+        context['ordered_products'] = order.orderproduct_set.select_related('product').order_by('product__id')
+        return context
 
 from django_weasyprint import WeasyTemplateResponse
 

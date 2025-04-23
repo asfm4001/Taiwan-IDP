@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import Client, Order, Product
+from .models import Client, Order, Product, OrderProduct
 # Register your models here.
+
+class OrderProductInline(admin.TabularInline):
+    model = OrderProduct
+    extra = 1
 
 class ClientAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -15,7 +19,7 @@ class ClientAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = [
         ('施工品項', {
-            'fields': ['product_name', ('product_unit', 'product_price')]
+            'fields': ['product_name', 'product_price']
         })
     ]
     list_display = ['product_name']
@@ -33,13 +37,8 @@ class OrderAdmin(admin.ModelAdmin):
         ("聯絡資訊", {
             "fields": [('contact_name', 'contact_phone'), 'note'],
             }),
-        (None, {
-            "fields": ['products'],
-            # "classes": ["collapse"]
-            }),
-        
     ]
-    # inlines = [ClientInline]
+    inlines = [OrderProductInline]
     search_fields = ['order_address']
     # date_hierarchy = 'order_date'     # 日期分類
     list_display = ["order_address", "order_status", "order_date", 'order_amount', 'contact_name', 'contact_phone']

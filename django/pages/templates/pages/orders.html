@@ -1,0 +1,51 @@
+{% extends 'pages/base.html' %}
+{% block titile %}訂單總覽{% endblock %}
+{% block container %}
+{% load static %}
+<!--  Section -->
+<section class="section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>訂單總覽</h2>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">訂單編號</th>
+          <th scope="col">狀態</th>
+          <th scope="col">施作地址</th>
+          <th scope="col">訂單日期</th>
+          <th scope="col">聯絡人姓名</th>
+          <th scope="col">聯絡人電話</th>
+          <th scope="col">報價單</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for o in orders %}
+        <tr>
+          <th scope="row">{{ o.id }}</th>
+          <td><span class="badge rounded-pill 
+            {% if o.order_status == '未啟動' %}bg-secondary
+            {% elif o.order_status == '進行中' %}bg-primary
+            {% elif o.order_status == '已結案' %}bg-success
+            {% elif o.order_status == '未結案' %}bg-warning
+            {% endif %}">{{ o.order_status }}</span>
+          </td>
+          <td>{{ o.order_address }}</td>
+          <td>{{ o.order_date }}</td>
+          <td>{{ o.contact_name }}</td>
+          <td>{{ o.contact_phone }}</td>
+          <td><a href="{% url 'estimates:detail' o.id %}"><i class="bi bi-printer"></i></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
+{% endblock %}

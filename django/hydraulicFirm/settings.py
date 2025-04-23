@@ -137,3 +137,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static') # 輸出app static files(for正�
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# For HTTP(default = True)
+CSRF_COOKIE_SECURE = False
