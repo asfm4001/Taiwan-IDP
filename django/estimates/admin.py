@@ -1,9 +1,13 @@
 from django.contrib import admin
-from .models import Client, Order, Product, OrderProduct
+from .models import Client, Order, Product, OrderProduct, Quotation, QuotationProduct
 # Register your models here.
 
 class OrderProductInline(admin.TabularInline):
     model = OrderProduct
+    extra = 1
+
+class QuotationProductInline(admin.TabularInline):
+    model = QuotationProduct
     extra = 1
 
 class ClientAdmin(admin.ModelAdmin):
@@ -23,6 +27,25 @@ class ProductAdmin(admin.ModelAdmin):
         })
     ]
     list_display = ['product_name']
+
+class QuotationAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {
+            "fields": ['client'],
+            # "classes": ["collapse"]
+            }),
+        ("訂單資訊", {
+            "fields": ['name', ('address', 'created_date'), 'area'],
+            }),
+        ("聯絡資訊", {
+            "fields": [('contact_name'), 'note'],
+            }),
+    ]
+    inlines = [QuotationProductInline]
+    search_fields = ['address']
+    list_display = ["address", "created_date", 'contact_name']
+    view_on_site = True
+    ordering = ['created_date']
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -49,3 +72,4 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(Quotation, QuotationAdmin)
