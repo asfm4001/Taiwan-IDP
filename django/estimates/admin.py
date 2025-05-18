@@ -13,20 +13,20 @@ class QuotationProductInline(admin.TabularInline):
 class ClientAdmin(admin.ModelAdmin):
     fieldsets = [
         ('客戶資料', {
-            'fields': [('client_name', 'client_phone'), 'client_gui'],
+            'fields': [('name', 'phone'), 'gui'],
             # "classes": ["collapse"]
         })
     ]
-    search_fields = ["client_name"]
-    list_display = ["client_name", "client_phone", "client_gui"]
+    search_fields = ["name"]
+    list_display = ["name", "phone", "gui"]
     
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = [
         ('施工品項', {
-            'fields': ['product_name', 'product_price']
+            'fields': ['name', 'price']
         })
     ]
-    list_display = ['product_name']
+    list_display = ['name']
 
 class QuotationAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -55,19 +55,19 @@ class OrderAdmin(admin.ModelAdmin):
             # "classes": ["collapse"]
             }),
         ("訂單資訊", {
-            "fields": [('order_address', 'order_date'), 'order_status', 'order_amount'],
+            "fields": [('address', 'created_date'), 'status'],
             }),
         ("聯絡資訊", {
             "fields": [('contact_name', 'contact_phone'), 'note'],
             }),
     ]
     inlines = [OrderProductInline]
-    search_fields = ['order_address']
+    search_fields = ['address']
     # date_hierarchy = 'order_date'     # 日期分類
-    list_display = ["order_address", "order_status", "order_date", 'order_amount', 'contact_name', 'contact_phone']
-    list_filter = ['order_status']
+    list_display = ["address", "status", "created_date", 'contact_name', 'contact_phone']
+    list_filter = ['status']
     view_on_site = True
-    ordering = ['order_date']
+    ordering = ['created_date']
 
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Product, ProductAdmin)
