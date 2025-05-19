@@ -13,6 +13,9 @@ class Client(models.Model):
     # )
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name = '業主'               # 自定義後台table name
+        verbose_name_plural = '業主管理'    # 複數table name 
     
 class Product(models.Model):
     name = models.CharField('施工品項', max_length=60)
@@ -20,6 +23,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    class Meta:
+        verbose_name = '工作項目'
+        verbose_name_plural = '工作項目'
 
 class Order(models.Model):
     status_list = {
@@ -55,6 +61,9 @@ class Order(models.Model):
     @property
     def total_with_tax(self):
         return self.subtotal + self.tax_amount
+    class Meta:
+        verbose_name = '訂單'
+        verbose_name_plural = '訂單'
 
 class Quotation(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
@@ -84,6 +93,9 @@ class Quotation(models.Model):
     @property
     def total_with_tax(self):
         return self.subtotal + self.tax_amount
+    class Meta:
+        verbose_name = '報價單'
+        verbose_name_plural = '報價單'
 
 class OrderProduct(models.Model):
     order = models.ForeignKey('Order', on_delete=models.CASCADE)
