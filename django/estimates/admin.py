@@ -5,12 +5,12 @@ from .models import Client, Order, Product, OrderProduct, Quotation, QuotationPr
 from .views import CustomAdminPageView as CustomView
 # Register your models here.
 
-class OrderProductInline(admin.TabularInline):
-    model = OrderProduct
-    extra = 1
-
 class QuotationProductInline(admin.TabularInline):
     model = QuotationProduct
+    extra = 1
+
+class OrderProductInline(admin.TabularInline):
+    model = OrderProduct
     extra = 1
 
 class ClientAdmin(admin.ModelAdmin):
@@ -60,13 +60,13 @@ class OrderAdmin(admin.ModelAdmin):
             "fields": [('address', 'created_date'), 'status'],
             }),
         ("聯絡資訊", {
-            "fields": [('contact_name', 'contact_phone'), 'note'],
+            "fields": [('contact_name'), 'note'],
             }),
     ]
     inlines = [OrderProductInline]
     search_fields = ['address']
     # date_hierarchy = 'order_date'     # 日期分類
-    list_display = ["address", "status", "created_date", 'contact_name', 'contact_phone']
+    list_display = ["address", "status", "created_date", 'contact_name']
     list_filter = ['status']
     view_on_site = True
     ordering = ['created_date']
