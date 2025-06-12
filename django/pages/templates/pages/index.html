@@ -1,23 +1,60 @@
 {% extends 'pages/base.html' %}
-{% block titile %}首頁{% endblock %}
+{% block title %}首頁{% endblock %}
 {% block container %}
 {% load static %}
 <section id="hero" class="hero section">
 
-  <img src="{% static 'pages/assets/img/img1.jpg' %}" alt="" data-aos="fade-in">
+  <img src="{% static 'pages/assets/img/img1.jpg' %}" alt="水利工程防災" data-aos="fade-in">
 
   <div class="container text-center" data-aos="zoom-out" data-aos-delay="100">
     <div class="row justify-content-center">
       <div class="col-lg-8">
-        <h2 style="color: #ffc107;">台灣整合防災工程技術顧問有限公司</h2>
-        <p style="color: darkgray;">
+        <p style="color: white;">CIVIL AND CONSTRUCTION ENGINEERING</p>
+        <h1 style="color: white;">以<span style="color: #ffc107;">工程防災</span>致力全員</h1>
+        <h1 style="color: white;">CSR-守護台灣永續</h1>
+        <!-- <p style="color: darkgray;">
           Taiwan Integrated Disaster Prevention of Technology Engineering<br>
           & Consulting Co.,Ltd.
-        </p>
-        <a href="{% url 'pages:about' %}" class="btn-get-started">關於我們</a>
+        </p> -->
+        <a href="{% url 'pages:contact' %}" class="btn-get-started" style="background-color: #009369;">馬上聯繫我們</a>
       </div>
     </div>
   </div>
 
 </section>
+<section id="testimonials" class="testimonials section">
+
+  <!-- Section Title -->
+  <!-- <div class="container section-title" data-aos="fade-up">
+    <h2>Testimonials</h2>
+    <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+  </div> -->
+
+  <div class="container col-lg-8" data-aos="fade-up" data-aos-delay="100">
+    <div class="row gy-4 justify-content-center">
+
+      {% for item in service_items %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="testimonial-item text-center p-3">
+          <div class="image-container mx-auto mb-3">
+            <img src="{% static item.image_url %}" class="rounded-circle" alt="" style="width: 150px; height: 150px; object-fit: cover;">
+          </div>
+          <h3 class="mb-3" style="font-weight: bold;">{{ item.title }}</h3>
+
+          <ul class="list-unstyled ps-0 text-start d-inline-block" style="max-width: 220px;">
+            {% for i in item.caption %}
+              <li class="d-flex align-items-start mb-2">
+                <span class="me-2 text-success" style="font-size: 1rem;">&#9679;</span> {{ i }}
+              </li>
+            {% endfor %}
+          </ul>
+
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+</section><!-- /Testimonials Section -->
 {% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'pages/base.html' %}
+{% block title %}透水保水設施檢查{% endblock %}
+{% block container %}
+{% load static %}
+
+<!-- Portfolio Details Section -->
+<section id="portfolio-details" class="portfolio-details section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>透水保水設施檢查</h2>
+    <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+  </div><!-- End Section Title -->
+
+  <!-- 最新消息 -->
+  <div class="container mb-4" data-aos="fade-up" data-aos-delay="50">
+    <h3 class="mb-3">最新消息</h3>
+    
+    <!-- 一則消息一個欄位 -->
+    <div class="mb-2">
+      <span class="badge bg-primary me-2">公告</span>
+      <span class="text-primary">依據透水保水自治條例: </span>「透水保水義務人依都市計畫規定設置透水保水相關貯留設施，應負維護責任」
+    </div>
+
+  </div>
+  <!-- End 最新消息 -->
+
+  <br/>
+
+  <!-- Content (可以加圖文內容區) -->
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row align-items-start mb-5" data-aos="fade-up">
+      
+      <!-- 左側 Carousel -->
+      <div class="col-lg-6">
+        <div id="radarCarousel" class="carousel slide" data-bs-ride="carousel">
+
+          <!-- Indicators -->
+          <!-- <div class="carousel-indicators">
+            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div> -->
+
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+            {% for item in carousel_items %}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{% static item.image_url %}" class="d-block w-100" alt="{{ item.title }}">
+                {% if item.title or item.caption %}
+                <div class="carousel-caption bg-dark bg-opacity-50 p-2 rounded">
+                  {% if item.title %}
+                  <h6 style="color: #ffc107;">{{ item.title }}</h6>
+                  {% endif %}
+                  {% if item.caption %}
+                  <p>{{ item.caption }}</p>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- Controls -->
+          <!-- <button class="carousel-control-prev" type="button" data-bs-target="#radarCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#radarCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button> -->
+
+        </div>
+      </div><!-- End 左側 Carousel -->
+
+      <div class="col-lg-6">
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-clock-fill me-2 text-warning"></i> 提送時機
+        </h3>
+        <p>每年<span style="color: red;">5月1日</span>以前至少一次委託專業技術團隊維修、檢查，並維持正常運作，其有損壞或阻塞，應<span class="text-primary">立即修繕及清淤。</span></p>
+
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-pencil-square me-2 text-warning"></i> 簽證
+        </h3>
+        <p>受委託專業技術團隊依附表二填具及技師簽證。<span class="text-primary">協助附表二及附表三一併填報!</span></p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+</section><!-- /Portfolio Details Section -->
+{% endblock %}

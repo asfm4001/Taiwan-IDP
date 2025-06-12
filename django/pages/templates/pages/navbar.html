@@ -1,22 +1,21 @@
 <nav id="navmenu" class="navmenu">
     <ul>
-      <li><a href="{% url 'pages:about' %}" class="{% if request.path == '/about/' %}active{% endif %}">關於我們</a></li>
-      <li class="dropdown"><a href="{% url 'pages:services' %}" class="{% if request.path == '/services/' %}active{% endif %}"><span>技術服務</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+      <li>
+        <a href="{% url 'pages:about' %}" class="{% if request.path == '/about/' %}active{% endif %}">關於我們</a></li>
+      <li class="dropdown"><a href="{% url 'pages:services' %}" class="{% if '/services/' in request.path %}active{% endif %}"><span>技術服務</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
         <ul>
-          <li><a href="#">透地雷達探測</a></li>
-          <li><a href="#">地電阻探測</a></li>
-          <li><a href="#">地質鑽探及簽證</a></li>
-          <li><a href="#">電磁波感測</a></li>
+          <li><a href="{% url 'pages:services_radar' %}">透地雷達探測</a></li>
+          <li><a href="{% url 'pages:services_water_retention' %}">透水保水設施檢查</a></li>
         </ul>
       </li>
-      <li class="dropdown"><a href="{% url 'pages:cases' %}" class="{% if request.path == '/cases/' %}active{% endif %}"><span>案例實績</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-        <ul>
+      <li><a href="{% url 'pages:cases' %}" class="{% if request.path == '/cases/' %}active{% endif %}"><span>工程實績</span></a>
+        <!-- <ul>
           <li><a href="#">污染調查</a></li>
           <li><a href="#">建築基地調查</a></li>
           <li><a href="#">地質鑽探及判釋</a></li>
-        </ul>
+        </ul> -->
       </li>
-      <li><a href="{% url 'pages:faqs' %}" class="{% if request.path == '/faqs/' %}active{% endif %}">常見問題</a></li>
+      <!-- <li><a href="{% url 'pages:faqs' %}" class="{% if request.path == '/faqs/' %}active{% endif %}">常見問題</a></li> -->
       <li><a href="{% url 'pages:contact' %} " class="{% if request.path == '/contact/' %}active{% endif %}">聯繫我們</a></li>
     </ul>
     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

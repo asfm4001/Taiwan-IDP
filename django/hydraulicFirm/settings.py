@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent   # /django
@@ -28,8 +29,8 @@ load_dotenv(ENV_FILE_PATH)
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG").lower() == 'true'
-ALLOWED_HOSTS = []
+DEBUG = os.getenv("DEBUG")
+ALLOWED_HOSTS = json.loads(os.getenv("ALLOWED_HOSTS_JSON"))
 
 
 # Application definition
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'pages.apps.PagesConfig',
     'estimates.apps.EstimatesConfig',
 ]
@@ -69,7 +71,7 @@ TEMPLATES = [
     # },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,7 +136,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'pages/static',    # 非預設, 覆蓋django原始static路徑
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static') # 輸出app static files(for正式環境存取路徑)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # 輸出app static files(for正式環境存取路徑)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -143,3 +145,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # For HTTP(default = True)
 CSRF_COOKIE_SECURE = False
+
+# 無權限造訪轉入URL
+LOGIN_URL = '/admin'

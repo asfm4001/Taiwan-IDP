@@ -759,6 +759,18 @@ section,
   .hero p {
     font-size: 18px;
   }
+
+  .testimonial-item ul {
+    padding-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .testimonial-item li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 5px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -1151,6 +1163,18 @@ section,
   fill: #f3268c;
 }
 
+.services .service-item.item-gray i {
+  color: #6c757d;
+}
+
+.services .service-item.item-gray:hover .icon i {
+  color: #fff;
+}
+
+.services .service-item.item-gray:hover .icon path {
+  fill: #6c757d;
+}
+
 /*--------------------------------------------------------------
 # Portfolio Section
 --------------------------------------------------------------*/
@@ -1416,5 +1440,33 @@ section,
 }
 
 /*--------------------------------------------------------------
-# Starter Section Section
+# Card
 --------------------------------------------------------------*/
+.card {
+  transition: transform 0.3s ease;
+}
+.card:hover {
+  transform: scale(0.95);
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+/* 手機版調整卡片圖片高度 */
+@media (max-width: 576px) {
+  .card-img-top {
+    height: 120px;
+  }
+}

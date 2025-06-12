@@ -1,5 +1,5 @@
 {% extends 'pages/base.html' %}
-{% block titile %}聯繫我們{% endblock %}
+{% block title %}聯繫我們{% endblock %}
 {% block container %}
 {% load static %}
 <section id="contact" class="contact section">
@@ -7,7 +7,7 @@
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
     <h2>聯繫我們</h2>
-    <p>台灣整合防災工程技術顧問歡迎您有任何問題向我們諮詢</p>
+    <p>請留下您的訊息需求，我們將盡快與您聯繫</p>
   </div><!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -22,7 +22,7 @@
             <i class="bi bi-telephone flex-shrink-0"></i>
             <div>
               <h3>聯絡電話</h3>
-              <p>(02) 2268 - 6798</p>
+              <p>09-3886-0635</p>
             </div>
           </div><!-- End Info Item -->
 
@@ -30,7 +30,7 @@
             <i class="bi bi-building flex-shrink-0"></i>
             <div>
               <h3>統一編號</h3>
-              <p>2836 8864</p>
+              <p>28368864</p>
             </div>
           </div><!-- End Info Item -->
 
@@ -56,17 +56,36 @@
             </div>
 
             <div class="col-md-6">
-              <label for="email-field" class="pb-2">Email</label>
-              <input type="email" class="form-control" name="email" id="email-field" required="">
-            </div>
-
-            <div class="col-md-12">
               <label for="phone-field" class="pb-2">聯絡電話</label>
               <input type="text" class="form-control" name="phone" id="phone-field" required="">
             </div>
 
+            <div class="col-md-6">
+              <label for="email-field" class="pb-2">Email</label>
+              <input type="email" class="form-control" name="email" id="email-field" required="">
+            </div>
+
+            <div class="col-md-6">
+              <label for="phone-field" class="pb-2">LINE ID</label>
+              <input type="text" class="form-control" name="line" id="line-field" required="">
+            </div>
+
             <div class="col-md-12">
-              <label for="message-field" class="pb-2">諮詢事項</label>
+              <div>
+                <label for="services-field" class="pb-2">選擇您的服務需求(可複選)</label>
+              </div>
+              
+              {% for item in form.services %}
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">{{ item }}</label>
+              </div>
+              {% endfor %}
+
+            </div>
+            
+            <div class="col-md-12">
+              <label for="message-field" class="pb-2">留下您的訊息</label>
               <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
             </div>
 
@@ -75,7 +94,7 @@
               <div class="error-message"></div>
               <div class="sent-message">Your message has been sent. Thank you!</div>
 
-              <button type="submit">聯繫我們</button>
+              <button type="submit">傳送諮詢單</button>
             </div>
 
           </div>

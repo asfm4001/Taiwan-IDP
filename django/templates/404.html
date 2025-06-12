@@ -1,0 +1,17 @@
+{% extends 'pages/base.html' %}
+{% block title %}Page Not Found{% endblock %}
+{% block container %}
+{% load static %}
+<section id="services" class="services section">
+<div class="container-fluid">
+
+                    <!-- 404 Error Text -->
+                    <div class="text-center">
+                        <h1>404</h1>
+                        <p class="lead text-gray-800 mb-5">抱歉，您所查詢的頁面不存在。</p>
+                        <a href="{% url 'pages:index' %}">← 返回首頁</a>
+                    </div>
+
+                </div>
+</section>
+{% endblock %}

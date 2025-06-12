@@ -1,36 +1,32 @@
 {% extends 'pages/base.html' %}
-{% block titile %}關於我們{% endblock %}
+{% block title %}關於我們{% endblock %}
 {% block container %}
 {% load static %}
-<!-- About Section -->
+
 <section id="about" class="about section">
 
-  <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-    <h2>關於我們</h2>
-  </div><!-- End Section Title -->
+    <h1>關於我們</h1>
+  </div>
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row gy-4 justify-content-center">
+    <div class="row gy-4 align-items-center justify-content-center">
       <div class="col-lg-4">
-        <img src="{% static 'pages/assets/img/img2.jpeg' %}" class="img-fluid" alt="">
+        <img src="{% static 'pages/assets/img/img2.jpeg' %}" class="img-fluid" alt="公司介紹圖片">
       </div>
       <div class="col-lg-8 content">
         <h2>台灣整合防災工程技術顧問有限公司</h2>
-        <p class="py-3">
-          台灣整合防災工程技術顧問有限公司(Taiwan Integrated Disaster Prevention of Technology Engineering & Consulting Co.,Ltd.)，
-          主要由幾位專業地質及地球物理專業人員組成之團隊。除提供專業技師簽證及地球物理探測技術外，
-          更以地質鑽探、地球物理探勘、土壤及地下水污染調查與水文調查為團隊主要之專業技能。
-          <br>
-          台整希望透過專業領域上之不斷追求創新與突破來服務社會大眾，並秉持著專業(Professional)、責任(Responsibility)及服務(Service)三大理念為公司之願景，
-          對於永業之客戶我們凡事皆以盡最大之能力、最高之配合度及最完善之服務態度與客戶共同成長及努力，將服務品質提昇至最高、最佳化之狀態。
+        <p class="lead fw-semibold mb-3">
+          企業永續發展、落實安全舒適的工作環境、守護員工安全與健康
+        </p>
+        <p>
+          台灣整合防災工程技術顧問有限公司成立於2006年(民國95年)，主要業務包括<b>結構檢監測、大地監觀測、氣象資訊服務、基樁試驗、土石流觀測、水利監測報系統、監測工程租賃、環境監測、自動化技術服務、工程地質、地球物理檢測、水利防災、環境工程及交通工程</b>等。
         </p>
       </div>
     </div>
-
   </div>
-
-</section><!-- /About Section -->
+</section>
+<!-- /About Section -->
 
 <!-- Stats Section -->
 <section id="stats" class="stats section">
@@ -43,39 +39,46 @@
   <div class="container" data-aos="fade-up" data-aos-delay="100">
 
     <div class="row gy-4">
-
-      <div class="col-lg-3 col-md-6">
+      {% for item in case_items %}
+      <div class="col-lg-4 col-md-4 col-sm-4">
         <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-          <p>污染調查</p>
+          <span data-purecounter-start="0" data-purecounter-end="{{ item.count }}" data-purecounter-duration="1" class="purecounter"></span>
+          <p>{{ item.title }}</p>
         </div>
       </div><!-- End Stats Item -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-          <p>河床淤積調查</p>
-        </div>
-      </div><!-- End Stats Item -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1" class="purecounter"></span>
-          <p>建築基地調查</p>
-        </div>
-      </div><!-- End Stats Item -->
-
-      <div class="col-lg-3 col-md-6">
-        <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1" class="purecounter"></span>
-          <p>地質鑽探判釋</p>
-        </div>
-      </div><!-- End Stats Item -->
+      {% endfor %}
+      
 
     </div>
 
   </div>
 
 </section><!-- /Stats Section -->
+
+<section id="testimonials" class="testimonials section">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>專業技術團隊</h2>
+    <p>主要業務為包括結構檢監測、大地監觀測、氣象資訊服務、基樁試驗、土石流觀測、水利監測報系統、監測工程租賃、環境監測、自動化技術服務、工程地質、地球物理檢測、水利防災、環境工程及交通工程等各項服務。</p>
+  </div>
+
+  <!-- 團隊卡片 -->
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      {% for item in card_items %}
+      <div class="col">
+        <div class="card h-100 text-center border-0 shadow-sm p-3">
+          <i class="{{ item.icon_url }} fs-1 text-success mb-3"></i>
+          <div class="card-body">
+            <h6 class="card-title">{{ item.title }}</h6>
+            <small class="card-text">{{ item.caption }}</small>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
 
 {% endblock %}

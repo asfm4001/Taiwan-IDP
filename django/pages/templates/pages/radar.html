@@ -1,0 +1,122 @@
+{% extends 'pages/base.html' %}
+{% block title %}透地雷達{% endblock %}
+{% block container %}
+{% load static %}
+
+<!-- Portfolio Details Section -->
+<section id="portfolio-details" class="portfolio-details section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>透地雷達</h2>
+    <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+  </div><!-- End Section Title -->
+
+  <!-- 最新消息 -->
+  <div class="container mb-4" data-aos="fade-up" data-aos-delay="50">
+    <h3 class="mb-3">最新消息</h3>
+    
+    <!-- 一則消息一個欄位 -->
+    <div class="mb-2">
+      <span class="badge bg-danger me-2">NEW</span>
+      依據新北市政府工務局於114年3月12日發布之<span class="text-primary">「新北市政府辦理建築工程施工防救災計畫說明會作業原則」</span>，自114年4月1日起承造人應於施工前、後進行<span class="text-primary">透地雷達檢測</span>。
+    </div>
+
+    <div class="mb-2">
+      <span class="badge bg-danger me-2">NEW</span>
+      依據臺北市政府於113年1月10日發布之<span class="text-primary">「臺北市建築物施工中維護公共設施管理要點」</span>，自113年1月18日起承造人應於施工前、後進行<span class="text-primary">透地雷達檢測</span>。
+    </div>
+
+  </div>
+  <!-- End 最新消息 -->
+
+  <br/>
+
+  <!-- Content (可以加圖文內容區) -->
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row align-items-start mb-5" data-aos="fade-up">
+      
+      <!-- 左側 Carousel -->
+      <div class="col-lg-6">
+        <div id="radarCarousel" class="carousel slide" data-bs-ride="carousel">
+
+          <!-- Indicators -->
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+            {% for item in carousel_items %}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img src="{% static item.image_url %}" class="d-block w-100" alt="{{ item.title }}">
+                <div class="carousel-caption bg-dark bg-opacity-50 p-2 rounded">
+                  <h6 style="color: #ffc107;">{{ item.title }}</h6>
+                  <p>{{ item.caption }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <!-- Controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#radarCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#radarCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+
+        </div>
+      </div><!-- End 左側 Carousel -->
+
+      <div class="col-lg-6">
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-clock-fill me-2 text-warning"></i> 提送時機
+        </h3>
+        <p>於<span class="text-primary">放樣勘驗 、竣工勘驗前</span>提送檢測報告</p>
+
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-geo-alt-fill me-2 text-warning"></i> 調查範圍
+        </h3>
+        <p>基地四周<span class="text-primary">二十公尺</span>範圍內各項公共設施</p>
+
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-pencil-square me-2 text-warning"></i> 簽證
+        </h3>
+        <p>檢測報告書需檢附現況相片及<span class="text-primary">技師簽證</span></p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+</section><!-- /Portfolio Details Section -->
+<section id="portfolio-details" class="portfolio-details section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>透地雷達技術應用於建築基地的創新解決方案</h2>
+    <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+  </div><!-- End Section Title -->
+
+    <div class="container">
+      <div class="card mb-3">
+        <img src="{% static 'pages/assets/img/radar/總圖.png' %}" class="card-img-top" alt="..." style="background-color: black;">
+        <div class="card-body">
+          <h5 class="card-title">台北市大安區新生南路三段16巷</h5>
+          <p class="card-text">此處為台北市大安區某建築現地，根據法規必須要施工前進行地球物理探測，並結合AR提供即時與準確的結果。</p>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+</section><!-- /Portfolio Details Section -->
+{% endblock %}

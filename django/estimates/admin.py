@@ -1,16 +1,25 @@
 from django.contrib import admin
 from django.urls import path, reverse
 from django.core.handlers.wsgi import WSGIRequest
-from .models import Client, Order, Product, OrderProduct, Quotation, QuotationProduct
+from .models import Client, Order, Product, OrderProduct, Quotation, QuotationProduct, SubProduct
 from .views import CustomAdminPageView as CustomView
 # Register your models here.
 
 class QuotationProductInline(admin.TabularInline):
     model = QuotationProduct
+    fields = ['product', 'quantity', 'get_subtotal']
+    readonly_fields = ['get_subtotal']
     extra = 1
 
 class OrderProductInline(admin.TabularInline):
     model = OrderProduct
+    fields = ['product', 'quantity', 'get_subtotal']
+    readonly_fields = ['get_subtotal']
+    extra = 1
+
+class SubProductInline(admin.TabularInline):
+    model = SubProduct
+    fields = ['name']
     extra = 1
 
 class ClientAdmin(admin.ModelAdmin):
@@ -26,47 +35,36 @@ class ClientAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = [
         ('施工品項', {
-            'fields': ['name', 'price']
+            'fields': [('name', 'is_active'), 'price']
         })
     ]
-    list_display = ['name']
+    list_display = ['name', 'price', 'is_active']
+    inlines = [SubProductInline]
 
 class QuotationAdmin(admin.ModelAdmin):
+    readonly_fields = ['subtotal', 'tax_amount', 'total_with_tax', 'number']
     fieldsets = [
-        (None, {
-            "fields": ['client'],
-            # "classes": ["collapse"]
-            }),
-        ("訂單資訊", {
-            "fields": ['name', ('address', 'created_date'), 'area'],
-            }),
-        ("聯絡資訊", {
-            "fields": [('contact_name'), 'note'],
-            }),
+        ('業主資訊', {'fields': ['client']}),
+        ('報價單資訊', {'fields': ['number', 'name', ('address', 'area', 'status'), 'contact_name', 'tax_rate', 'note']}),
+        ('當前報價', {'fields': [('subtotal', 'tax_amount'), 'total_with_tax'], 'description': '當前報價會在儲存後自動更新'}),
     ]
     inlines = [QuotationProductInline]
     search_fields = ['address']
-    list_display = ["address", "created_date", 'contact_name']
+    list_display = ['number', 'address', 'subtotal', 'tax_rate','total_with_tax' , 'created_date', 'status']
     view_on_site = True
     ordering = ['created_date']
 
 class OrderAdmin(admin.ModelAdmin):
+    readonly_fields = ['subtotal', 'tax_amount', 'total_with_tax', 'number']
     fieldsets = [
-        (None, {
-            "fields": ['client'],
-            # "classes": ["collapse"]
-            }),
-        ("訂單資訊", {
-            "fields": [('address', 'created_date'), 'status'],
-            }),
-        ("聯絡資訊", {
-            "fields": [('contact_name'), 'note'],
-            }),
+        ('業主資訊', {'fields': ['client']}),
+        ('訂單資訊', {'fields': ['number', ('address', 'status'), 'tax_rate', 'note']}),
+        ('當前訂價', {'fields': [('subtotal', 'tax_amount'), 'total_with_tax'], 'description': '當前訂價會在儲存後自動更新'}),
     ]
     inlines = [OrderProductInline]
     search_fields = ['address']
     # date_hierarchy = 'order_date'     # 日期分類
-    list_display = ["address", "status", "created_date", 'contact_name']
+    list_display = ['number', 'address', 'subtotal', 'tax_rate','total_with_tax' , 'created_date', 'status']
     list_filter = ['status']
     view_on_site = True
     ordering = ['created_date']
@@ -90,21 +88,21 @@ class CustomAdminPageView(admin.AdminSite):
 
         custom_admin_url = reverse("admin:custom_admin_page")
 
-        app_list.append(
-            {
-                "name": ("Custom Admin Page"),
-                "app_label": "custom_admin_page",
-                "app_url": "",
-                "has_module_perms": True,
-                "models": [
-                    {
-                        "name": ("Custom Admin Page"),
-                        "object_name": "CustomAdminPage",
-                        "admin_url": custom_admin_url,
-                    }
-                ],
-            }
-        )
+        # app_list.append(
+        #     {
+        #         "name": ("Custom Admin Page"),
+        #         "app_label": "custom_admin_page",
+        #         "app_url": "",
+        #         "has_module_perms": True,
+        #         "models": [
+        #             {
+        #                 "name": ("Custom Admin Page"),
+        #                 "object_name": "CustomAdminPage",
+        #                 "admin_url": custom_admin_url,
+        #             }
+        #         ],
+        #     }
+        # )
         return app_list
 
 admin_site = CustomAdminPageView(name="admin")
