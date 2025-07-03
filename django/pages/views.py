@@ -1,6 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib import messages
 from django.views import generic
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.http import HttpResponseRedirect
 from estimates.models import Order
+from pages.email import mailContext
+from pages.forms import ContactForm
+import os, json
 
 # Create your views here.
 def index(request):
@@ -156,13 +164,34 @@ def faqs(request):
     return render(request, 'pages/faqs.html')
 
 def contact(request):
-    form = {
-        'services': ['水利監測測報工程', '下水道檢監測工程', '土石流監測工程', '無人飛機調查', '環境監測工程', '基樁試驗',
-                      '防災演練訓練', '大地監(觀)測工程', '橋梁檢測工程', '道路調查', '工程地質']
-    }
-    context = {
-        'form': form
-    }
+    if request.POST:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            phone = form.cleaned_data['phone']
+            email = form.cleaned_data['email']
+            line_id = form.cleaned_data['line_id']
+            services_list = form.cleaned_data['services']
+            message = form.cleaned_data['message']
+            msg = mailContext(name, phone, email, line_id, services_list, message)
+            
+            # get target mail list
+            target_mails_list = os.getenv("TARGET_EMAIL")
+            count = send_mail(
+                "台整-客戶諮詢系統通知",
+                msg,
+                '',
+                target_mails_list,
+            )
+            messages.success(request, '已接收您的訊息，我們將盡快與您聯繫')
+            return redirect(reverse('pages:contact'))
+        else:
+            print("表單錯誤: ", form.errors)
+            print(form.errors.as_json())
+    
+    form = ContactForm()
+   
+    context = {'form': form,}
     return render(request, 'pages/contact.html', context=context)
 
 class OrdersView(generic.ListView):

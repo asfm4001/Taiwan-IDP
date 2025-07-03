@@ -69,49 +69,49 @@ class OrderAdmin(admin.ModelAdmin):
     view_on_site = True
     ordering = ['created_date']
 
-class CustomAdminPageView(admin.AdminSite):
-    # 自定義 admin 頁面 除了原本的 urls 之外,再添加一個自定義的 url
-    def get_urls(self):
-        urls = super().get_urls()
-        custom_urls = [
-            path(
-                "custom_admin_page/",
-                self.admin_view(CustomView.as_view(admin_site=self)),
-                name="custom_admin_page",
-            ),
-        ]
-        return custom_urls + urls
+# class CustomAdminPageView(admin.AdminSite):
+#     # 自定義 admin 頁面 除了原本的 urls 之外,再添加一個自定義的 url
+#     def get_urls(self):
+#         urls = super().get_urls()
+#         custom_urls = [
+#             path(
+#                 "custom_admin_page/",
+#                 self.admin_view(CustomView.as_view(admin_site=self)),
+#                 name="custom_admin_page",
+#             ),
+#         ]
+#         return custom_urls + urls
 
-    # 自定義 admin 頁面的左側導航欄
-    def get_app_list(self, request: WSGIRequest) -> list[any]:
-        app_list = super().get_app_list(request)
+#     # 自定義 admin 頁面的左側導航欄
+#     def get_app_list(self, request: WSGIRequest) -> list[any]:
+#         app_list = super().get_app_list(request)
 
-        custom_admin_url = reverse("admin:custom_admin_page")
+#         custom_admin_url = reverse("admin:custom_admin_page")
 
-        # app_list.append(
-        #     {
-        #         "name": ("Custom Admin Page"),
-        #         "app_label": "custom_admin_page",
-        #         "app_url": "",
-        #         "has_module_perms": True,
-        #         "models": [
-        #             {
-        #                 "name": ("Custom Admin Page"),
-        #                 "object_name": "CustomAdminPage",
-        #                 "admin_url": custom_admin_url,
-        #             }
-        #         ],
-        #     }
-        # )
-        return app_list
+#         # app_list.append(
+#         #     {
+#         #         "name": ("Custom Admin Page"),
+#         #         "app_label": "custom_admin_page",
+#         #         "app_url": "",
+#         #         "has_module_perms": True,
+#         #         "models": [
+#         #             {
+#         #                 "name": ("Custom Admin Page"),
+#         #                 "object_name": "CustomAdminPage",
+#         #                 "admin_url": custom_admin_url,
+#         #             }
+#         #         ],
+#         #     }
+#         # )
+#         return app_list
 
-admin_site = CustomAdminPageView(name="admin")
-admin_site.register(Client, ClientAdmin)
-admin_site.register(Product, ProductAdmin)
-admin_site.register(Order, OrderAdmin)
-admin_site.register(Quotation, QuotationAdmin)
+# admin_site = CustomAdminPageView(name="admin")
+# admin_site.register(Client, ClientAdmin)
+# admin_site.register(Product, ProductAdmin)
+# admin_site.register(Order, OrderAdmin)
+# admin_site.register(Quotation, QuotationAdmin)
 
-# admin.site.register(Client, ClientAdmin)
-# admin.site.register(Product, ProductAdmin)
-# admin.site.register(Order, OrderAdmin)
-# admin.site.register(Quotation, QuotationAdmin)
+admin.site.register(Client, ClientAdmin)
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(Quotation, QuotationAdmin)

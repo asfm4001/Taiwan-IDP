@@ -37,7 +37,7 @@
       <div class="col-lg-3 col-md-4 col-sm-6">
         <div class="testimonial-item text-center p-3">
           <div class="image-container mx-auto mb-3">
-            <img src="{% static item.image_url %}" class="rounded-circle" alt="" style="width: 150px; height: 150px; object-fit: cover;">
+            <img src="{% static item.image_url %}" class="rounded-circle" alt="{{ item.title }}" style="width: 150px; height: 150px; object-fit: cover;">
           </div>
           <h3 class="mb-3" style="font-weight: bold;">{{ item.title }}</h3>
 

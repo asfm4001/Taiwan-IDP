@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin   # class-based view
 from .models import Quotation, Order
 
 # 僅Linux環境可執行
-from django_weasyprint import WeasyTemplateResponse
+# from django_weasyprint import WeasyTemplateResponse
 
 def index(request):
     return render(request, 'estimates/index.html')

@@ -47,48 +47,65 @@
       </div>
 
       <div class="col-lg-7">
-        <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+        <form action="{% url 'pages:contact' %}" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+          {% csrf_token %}
           <div class="row gy-4">
-
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+                {% for error in form.non_field_errors %}
+                  <div>{{ error }}</div>
+                {% endfor %}
+              </div>
+            {% endif %}
             <div class="col-md-6">
-              <label for="name-field" class="pb-2">姓名</label>
-              <input type="text" name="name" id="name-field" class="form-control" required="">
+              <label for="name-field" class="pb-2">{{ form.name.label }}</label>
+              {{ form.name}}
+              {% if form.name.errors %}
+                <div class="invalid-feedback">
+                  {{ form.name.errors.0 }}
+                </div>
+              {% endif %}
             </div>
 
             <div class="col-md-6">
-              <label for="phone-field" class="pb-2">聯絡電話</label>
-              <input type="text" class="form-control" name="phone" id="phone-field" required="">
+              <label for="name-field" class="pb-2">{{ form.phone.label }}</label>
+              {{ form.phone}}
             </div>
 
             <div class="col-md-6">
-              <label for="email-field" class="pb-2">Email</label>
-              <input type="email" class="form-control" name="email" id="email-field" required="">
+              <label for="name-field" class="pb-2">{{ form.email.label }}</label>
+              {{ form.email}}
             </div>
 
             <div class="col-md-6">
-              <label for="phone-field" class="pb-2">LINE ID</label>
-              <input type="text" class="form-control" name="line" id="line-field" required="">
+              <label for="name-field" class="pb-2">{{ form.line_id.label }}</label>
+              {{ form.line_id}}
             </div>
 
             <div class="col-md-12">
               <div>
-                <label for="services-field" class="pb-2">選擇您的服務需求(可複選)</label>
+                <label for="services-field" class="pb-2">{{ form.services.label }}</label>
               </div>
-              
-              {% for item in form.services %}
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">{{ item }}</label>
-              </div>
+              {% for checkbox in form.services %}
+                <div class="form-check form-check-inline">
+                  {{ checkbox.tag }}<label class="form-check-label">{{ checkbox.choice_label }}</label>
+                </div>
               {% endfor %}
 
             </div>
             
             <div class="col-md-12">
-              <label for="message-field" class="pb-2">留下您的訊息</label>
-              <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
+              {{ form.message.label }}
+              {{ form.message }}
             </div>
 
+            <div class="col-md-12 d-flex justify-content-center">
+              {{ form.captcha }}
+            </div>
+
+            {% if form.errors %}
+              {{ form.errors }}
+            {% endif %}
             <div class="col-md-12 text-center">
               <div class="loading">Loading</div>
               <div class="error-message"></div>
@@ -100,7 +117,7 @@
           </div>
         </form>
       </div><!-- End Contact Form -->
-
+      
     </div>
 
   </div>

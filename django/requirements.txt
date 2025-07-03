@@ -4,7 +4,8 @@ cffi==1.17.1
 chardet==5.2.0
 cssselect2==0.8.0
 Django==5.1.7
-django-weasyprint==2.4.0
+django-recaptcha==4.1.0
+# django-weasyprint==2.4.0
 dotenv==0.9.9
 fonttools==4.57.0
 gunicorn==23.0.0
