@@ -5,12 +5,27 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>{% block title %}{% endblock %} - 台灣整合防災工程技術顧問有限公司</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <meta name="description" content="台灣整合防災工程技術顧問有限公司提供透地雷達檢測、防災顧問、工程監測等專業服務，協助建築安全與災害預防。">
+  <meta name="keywords" content="透地雷達, 防災顧問, 工程檢測, 建築安全, 防災技術, 氣象預報">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "台灣整合防災工程技術顧問有限公司",
+    "url": "https://taiwan-idp.com",
+    "logo": "https://taiwan-idp.com/static/pages/assets/img/TaiwanIDP_LOGO.png",
+    "sameAs": [
+      "https://line.me/ti/p/OorcIN5Rdf#~"
+    ]
+  }
+  </script>
+
 
   <!-- Favicons -->
   {% load static %}
-  <link href="{% static 'pages/assets/img/台整LOGO.png' %}" rel="icon">
+  <!-- <link href="{% static 'pages/assets/img/TaiwanIDP_LOGO.png' %}" rel="icon"> -->
+  <link href="{% static 'pages/assets/img/favicon.ico' %}" rel="icon" type="image/x-icon">
+  <link href="{% static 'pages/assets/img/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
   <!-- <link href="{% static 'pages/assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon"> -->
 
   <!-- Fonts -->
@@ -28,6 +43,17 @@
   <!-- Main CSS File -->
   <link href="{% static 'pages/assets/css/main.css' %}" rel="stylesheet">
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17212131193">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-17212131193');
+  </script>
+
   <!-- =======================================================
   * Template Name: Kelly
   * Template URL: https://bootstrapmade.com/kelly-free-bootstrap-cv-resume-html-template/
@@ -44,7 +70,7 @@
 
       <a href="{% url 'pages:index' %}" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="{% static 'pages/assets/img/台整LOGO.png' %}" alt="台灣整合防災工程技術顧問有限公司LOGO">
+        <img src="{% static 'pages/assets/img/TaiwanIDP_LOGO.png' %}" alt="台灣整合防災工程技術顧問有限公司LOGO">
         <div>
           <!-- 桌機顯示 -->
           <h1 class="sitename d-none d-md-block" style="font-family: 'Microsoft JhengHei'; font-size: 1.2rem;">

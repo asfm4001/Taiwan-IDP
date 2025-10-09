@@ -15,6 +15,7 @@ class ContactForm(forms.Form):
     ('橋梁檢測工程', '橋梁檢測工程'),
     ('道路調查', '道路調查'),
     ('工程地質', '工程地質'),
+    ('氣象預報', '氣象預報'),
 ]
     name = forms.CharField(label='姓名', max_length=30, required=False, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
