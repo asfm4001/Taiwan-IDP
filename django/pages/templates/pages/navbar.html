@@ -6,9 +6,11 @@
         <ul>
           <li><a href="{% url 'pages:services_radar' %}">透地雷達探測</a></li>
           <li><a href="{% url 'pages:services_water_retention' %}">透水保水設施檢查</a></li>
+          <li><a href="{% url 'pages:services_water_retention_design' %}">透水保水設計</a></li>
+          <li><a href="{% url 'pages:services_water_level_meter' %}">水位計</a></li>
         </ul>
       </li>
-      <li><a href="{% url 'pages:cases' %}" class="{% if request.path == '/cases/' %}active{% endif %}"><span>工程實績</span></a>
+      <li><a href="{% url 'pages:instance_list' %}" class="{% if request.path == '/instance_list/' %}active{% endif %}"><span>工程實績</span></a>
         <!-- <ul>
           <li><a href="#">污染調查</a></li>
           <li><a href="#">建築基地調查</a></li>

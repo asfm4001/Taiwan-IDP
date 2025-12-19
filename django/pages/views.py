@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from estimates.models import Order
 from pages.email import mailContext
 from pages.forms import ContactForm
+from pages.models import Instance
 import os, json
 
 # Create your views here.
@@ -119,6 +120,35 @@ def services_water_retention(request):
     }
     return render(request, 'pages/water_retention.html', context=context)
 
+def services_water_retention_design(request):
+    carousel_items = [
+        {
+            'image_url': 'pages/assets/img/water_retention/img1.png',
+            # 'title': '瑞士PROCEQ-GS9000陣列式透地雷達',
+            # 'caption': '可輕易檢測出路面劣化及沉陷規模及範圍',
+        },
+    ]
+
+    context = {
+        'carousel_items': carousel_items,
+    }
+    return render(request, 'pages/water_retention_design.html', context=context)
+
+def services_water_level_meter(request):
+    carousel_items = [
+        {
+            'image_url': 'pages/assets/img/water_level_meter/demo.jpg',
+            # 'title': '瑞士PROCEQ-GS9000陣列式透地雷達',
+            # 'caption': '可輕易檢測出路面劣化及沉陷規模及範圍',
+        },
+    ]
+
+    context = {
+        'carousel_items': carousel_items,
+        # 'water_level_meter_pdf': "pages/assets/img/water_level_meter/demo.pdf"
+    }
+    return render(request, 'pages/water_level_meter.html', context=context)
+
 def cases(request):
     card_items = [
         {
@@ -200,3 +230,19 @@ class OrdersView(generic.ListView):
 
     def get_queryset(self):
         return Order.objects.all()
+
+class InstanceListView(generic.ListView):
+    model = Instance
+
+    def get_context_data(self, **kwargs):
+        carousel_items = [
+            {
+                'image_url': 'pages/assets/img/instance/water_retention_instance_v4.jpg',
+                # 'title': '瑞士PROCEQ-GS9000陣列式透地雷達',
+                # 'caption': '可輕易檢測出路面劣化及沉陷規模及範圍',
+            },
+        ]
+        context =  super().get_context_data(**kwargs)
+        context['carousel_items'] = carousel_items
+        # context['water_retention_pdf'] = "pages/assets/img/instance/water_retention_instance_v4.pdf"
+        return context

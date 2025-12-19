@@ -1,0 +1,52 @@
+{% extends 'pages/base.html' %}
+{% block title %}工程實績{% endblock %}
+{% block container %}
+{% load static %}
+<section id="services" class="services section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>合作對象</h2>
+  </div><!-- End Section Title -->
+
+  <div class="container col-lg-10">
+    <div class="row gy-4 gx-6 justify-content-center">
+        <!-- <iframe src="{% static water_retention_pdf %}" width="100%" height="700px"></iframe> -->
+        {% for item in carousel_items %}
+          <img src="{% static item.image_url %}" class="d-block w-100" alt="台整透水保水實機DM">
+        {% endfor %}
+    </div>
+  </div>
+
+</section>
+
+<section id="services" class="services section">
+
+  <div class="container section-title" data-aos="fade-up">
+    <h2>已竣工項目</h2>
+  </div><!-- End Section Title -->
+
+  <div class="container col-lg-10">
+    <div class="row gy-4 gx-6 justify-content-center">
+        <table id="instance-table" class="table">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>位置</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for instance in instance_list %}
+                <tr>
+                    <td></td>
+                    <td>{{ instance.address }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+  </div>
+
+</section>
+{% endblock %}

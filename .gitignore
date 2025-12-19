@@ -1,4 +1,17 @@
-.venv/
 .env
-__pycache__/
+.venv
+
+db.sqlite3
+
+# python執行檔
+__pycache__
+*.pyc
+
+# pytest執行檔 
+.pytest_cache/
+
+# log日誌
+django.log*
+
+# django靜態檔
 django/staticfiles

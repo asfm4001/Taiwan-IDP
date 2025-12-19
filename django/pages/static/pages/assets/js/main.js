@@ -183,4 +183,26 @@
 
   });
 
+  /* simple table */
+  document.addEventListener("DOMContentLoaded", function () {
+      const table = document.querySelector("#instance-table");
+      new simpleDatatables.DataTable(table, {
+          searchable: true,
+          fixedHeight: true,
+          perPage: 10,
+
+          // ★ 放在 DataTable 設定物件裡
+          columns: [
+              {
+                  select: 0,
+                  render: (data, cell, row) => {
+                      return row.dataIndex + 1;
+                  }
+              }
+          ]
+      });
+      
+      
+  });
+
 })();
