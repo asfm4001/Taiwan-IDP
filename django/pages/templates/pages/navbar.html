@@ -2,12 +2,13 @@
     <ul>
       <li>
         <a href="{% url 'pages:about' %}" class="{% if request.path == '/about/' %}active{% endif %}">關於我們</a></li>
-      <li class="dropdown"><a href="{% url 'pages:services' %}" class="{% if '/services/' in request.path %}active{% endif %}"><span>技術服務</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+      <li class="dropdown"><a href="{% url 'pages:service_list' %}" class="{% if '/service/' in request.path %}active{% endif %}"><span>技術服務</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
         <ul>
-          <li><a href="{% url 'pages:services_radar' %}">透地雷達探測</a></li>
-          <li><a href="{% url 'pages:services_water_retention' %}">透水保水設施檢查</a></li>
-          <li><a href="{% url 'pages:services_water_retention_design' %}">透水保水設計</a></li>
-          <li><a href="{% url 'pages:services_water_level_meter' %}">水位計</a></li>
+          <li><a href="{% url 'pages:service_detail' pk=1 %}">基地排水計畫設計</a></li>
+          <li><a href="{% url 'pages:service_detail' pk=2 %}">透水保水檢查</a></li>
+          <li><a href="{% url 'pages:service_detail' pk=3 %}">水位計安裝</a></li>
+          <li><a href="#">竣工查驗</a></li>
+          <li><a href="{% url 'pages:service_detail' pk=5 %}">透地雷達探測</a></li>
         </ul>
       </li>
       <li><a href="{% url 'pages:instance_list' %}" class="{% if request.path == '/instance_list/' %}active{% endif %}"><span>工程實績</span></a>

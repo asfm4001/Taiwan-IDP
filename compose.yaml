@@ -15,20 +15,20 @@ services:
 
     networks:
       - mynetwork
-    # command: ['gunicorn', '-w', '1', '-b', '0.0.0.0:8000', 'hydraulicFirm.wsgi']
+    command: ['gunicorn', '-w', '1', '-b', '0.0.0.0:8000', 'hydraulicFirm.wsgi']
 
-  # web_server:
-  #   image: nginx
-  #   ports:
-  #     - '8888:80'
-  #   volumes:
-  #     - ./nginx/default.conf:/etc/nginx/conf.d/default.conf  
-  #     # 將./nginx/default.conf取代container中的/etc/nginx/conf.d/default.conf
-  #     - static_volume:/usr/share/nginx/html/static  # 掛在共用DIR
-  #   depends_on:
-  #     - app_server
-  #   networks:
-  #     - mynetwork
+  web_server:
+    image: nginx
+    ports:
+      - '8888:80'
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      # 將./nginx/default.conf取代container中的/etc/nginx/conf.d/default.conf
+      - static_volume:/usr/share/nginx/html/static  # 掛在共用DIR
+    depends_on:
+      - app_server
+    networks:
+      - mynetwork
 
 # 各個container共享的volumes
 volumes:

@@ -1,0 +1,92 @@
+{% extends 'pages/base.html' %}
+{% block title %}{{ object.title }}{% endblock %}
+{% block container %}
+{% load static %}
+
+<!-- Portfolio Details Section -->
+<section id="portfolio-details" class="portfolio-details section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>{{ object.title }}</h2>
+    <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+  </div><!-- End Section Title -->
+
+  <!-- 最新消息 -->
+  {% if object.article_set.all %}
+  <div class="container mb-4" data-aos="fade-up" data-aos-delay="50">
+    <h3 class="mb-3">相關法規</h3>
+    
+    {% for article in object.article_set.all %}
+    <div class="mb-2">
+      <span class="badge bg-{{ article.type }} me-2">{{ article.title }}</span>
+      {{ article.context|safe }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <br/>
+
+  <!-- Content (可以加圖文內容區) -->
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row align-items-start mb-5" data-aos="fade-up">
+      
+      <!-- 左側 Carousel -->
+      <div class="col-lg-6">
+        <div class="portfolio-details-slider swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              }
+            }
+          </script>
+
+          <div class="swiper-wrapper align-items-center">
+            {% for item in object.image_set.all %}
+            <div class="swiper-slide">
+              <img src="{% static item.image_path %}" alt="">
+            </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div><!-- End 左側 Carousel -->
+
+      <div class="col-lg-6">
+        {% if object.subnussuibTimeDesc %}
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-clock-fill me-2 text-warning"></i> 提送時機
+        </h3>
+        <p>{{ object.subnussuibTimeDesc|safe }}</p>
+        {% endif %}
+
+        {% if object.signatureDesc %}
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-geo-alt-fill me-2 text-warning"></i> 調查範圍
+        </h3>
+        <p>{{ object.signatureDesc|safe }}</p>
+        {% endif %}
+
+        {% if object.scopeOfSurveyDesc %}
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-pencil-square me-2 text-warning"></i> 簽證
+        </h3>
+        <p>{{ object.scopeOfSurveyDesc|safe }}</p>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+</section><!-- /Portfolio Details Section -->
+{% endblock %}

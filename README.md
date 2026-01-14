@@ -1,7 +1,3 @@
-# Super admin
-ID: superadmin
-PW: xu3aj4fu0
-
 # Framework
 ```python
 .

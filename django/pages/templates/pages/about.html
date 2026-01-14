@@ -37,20 +37,15 @@
   </div><!-- End Section Title -->
 
   <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-    <div class="row gy-4">
-      {% for item in case_items %}
-      <div class="col-lg-4 col-md-4 col-sm-4">
-        <div class="stats-item text-center w-100 h-100">
-          <span data-purecounter-start="0" data-purecounter-end="{{ item.count }}" data-purecounter-duration="1" class="purecounter"></span>
-          <p>{{ item.title }}</p>
-        </div>
-      </div><!-- End Stats Item -->
-      {% endfor %}
-      
-
+    <div class="row gy-4 row-cols-2 row-cols-md-3 row-cols-lg-5">
+    {% for item in case_items %}
+    <div class="col">
+      <div class="stats-item text-center w-100 h-100">
+        <span data-purecounter-start="0" data-purecounter-end="{{ item.count }}" data-purecounter-duration="1" class="purecounter"></span>
+        <p>{{ item.title }}</p>
+      </div>
     </div>
-
+    {% endfor %}
   </div>
 
 </section><!-- /Stats Section -->
@@ -64,14 +59,22 @@
 
   <!-- 團隊卡片 -->
   <div class="container" data-aos="fade-up" data-aos-delay="100">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
       {% for item in card_items %}
       <div class="col">
         <div class="card h-100 text-center border-0 shadow-sm p-3">
+          <a href="{{ item.url }}" class="stretched-link"></a>
           <i class="{{ item.icon_url }} fs-1 text-success mb-3"></i>
           <div class="card-body">
             <h6 class="card-title">{{ item.title }}</h6>
             <small class="card-text">{{ item.caption }}</small>
+            {% if item.contexts %}
+            <ul>
+            {% for context in item.contexts %}
+                <li>{{ context }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
           </div>
         </div>
       </div>

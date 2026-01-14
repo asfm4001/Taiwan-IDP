@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from estimates.models import Order
 from pages.email import mailContext
 from pages.forms import ContactForm
-from pages.models import Instance
+from pages.models import Instance, Service
 import os, json
 
 # Create your views here.
@@ -37,39 +37,54 @@ def index(request):
     return render(request, 'pages/index.html', context=context)
 
 def about(request):
+    services = Service.objects.all()
     card_items = [
         {
-            'title': '結構安全鑑定',
-            'caption': '安全鑑定以標的物之結構體的安全與否為首要目的',
-            'icon_url': 'bi-house-exclamation',
+            'title': '基地排水計畫設計',
+            'icon_url': 'bi-moisture',
+            'url': reverse("pages:service_detail", kwargs={'pk': 1}),
+            'contexts': ['流出抑制設施', '透水保水設施', '出流管制', '排水改道', '水土保持', '河川公地申請', '計畫撰寫']
         },
         {
-            'title': '建築物耐震能力',
-            'caption': '初步、詳細評估 補強設計與監造',
-            'icon_url': 'bi-building',
+            'title': '透水保水檢查',
+            'icon_url': 'bi-droplet-half',
+            'url': reverse("pages:service_detail", kwargs={'pk': 2}),
         },
         {
-            'title': '道路、橋梁、公園、景觀工程',
-            'caption': '工程設計與監造',
-            'icon_url': 'bi-tree',
+            'title': '水位計安裝',
+            'icon_url': 'bi-broadcast',
+            'url': reverse("pages:service_detail", kwargs={'pk': 3}),
         },
         {
-            'title': '水土保持、野溪整治工程',
-            'caption': '工程設計與監造',
-            'icon_url': 'bi-rulers',
+            'title': '竣工檢查',
+            'icon_url': 'bi-clipboard-check',
+            'url': '#',
+        },
+        {
+            'title': '透地雷達探測',
+            'icon_url': 'bi-activity',
+            'url': reverse("pages:service_detail", kwargs={'pk': 5}),
         },
     ]
     case_items = [
         {
-            'title': '水利工程案例',
+            'title': '基地排水計畫設計',
             'count': 68,
         },
         {
-            'title': '環境景觀規劃案例',
+            'title': '透水保水檢查',
             'count': 109,
         },
         {
-            'title': '土木營建規劃案例',
+            'title': '水位計安裝',
+            'count': 223,
+        },
+        {
+            'title': '竣工查驗',
+            'count': 223,
+        },
+        {
+            'title': '透地雷達探測',
             'count': 223,
         },
     ]
@@ -137,10 +152,11 @@ def services_water_retention_design(request):
 def services_water_level_meter(request):
     carousel_items = [
         {
-            'image_url': 'pages/assets/img/water_level_meter/demo.jpg',
+            'image_url': 'pages/assets/img/water_level_meter/demo2.jpg',
             # 'title': '瑞士PROCEQ-GS9000陣列式透地雷達',
             # 'caption': '可輕易檢測出路面劣化及沉陷規模及範圍',
         },
+        
     ]
 
     context = {
@@ -246,3 +262,9 @@ class InstanceListView(generic.ListView):
         context['carousel_items'] = carousel_items
         # context['water_retention_pdf'] = "pages/assets/img/instance/water_retention_instance_v4.pdf"
         return context
+    
+class ServiceListView(generic.ListView):
+    model = Service
+
+class ServiceDetailView(generic.DetailView):
+    model = Service

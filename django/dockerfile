@@ -1,18 +1,28 @@
-# Based Images
+# 1.指定鏡像檔
 FROM python
 
-# Work DIR
-WORKDIR /home/django
+# 2.環境變數
+# 禁止產出.pyc編譯檔
+ENV PYTHONDONTWRITEBYTECODE=1
+# Log即使輸出(stdout / stderr 不經緩衝，立刻輸出)g
+ENV PYTHONUNBUFFERED=1
 
-# 複製本地 -> container工作目錄
-# COPY . .
+# 3.設定工作目錄
+WORKDIR /app
 
-# pip更新與安裝相關套件
-# RUN pip install --upgrade pip \
-# && pip install -r requirements.txt
+# 4.複製專案 -> container工作目錄
+COPY . .
 
-# 開放8000連接至container
-EXPOSE 8000
+# 5.pip更新 & 安裝相關套件
+RUN pip install --upgrade pip \
+&& pip install -r requirements.txt
 
-# 設定當run images自動執行命令
-# CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8000", "hydraulicFirm.wsgi"]
+# 6.部署靜態資源
+# --noinput, 使用預設行為(yes)
+RUN python manage.py collectstatic --noinput
+
+# 7.(使用docker-compose時，無需使用) 開放8000連接至container
+# EXPOSE 7000
+
+# 8.預設不啟動 (設定當run images自動執行命令)
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:7000", "hydraulicFirm.wsgi"]

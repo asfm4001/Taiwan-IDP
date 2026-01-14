@@ -1,29 +1,28 @@
 {% extends 'pages/base.html' %}
-{% block title %}透水保水檢查{% endblock %}
-{% block container %}
 {% load static %}
+{% block title %}基地排水計畫設計{% endblock %}
+{% block container %}
+
 
 <!-- Portfolio Details Section -->
 <section id="portfolio-details" class="portfolio-details section">
 
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-    <h2>透水保水檢查</h2>
+    <h2>{% block section_title %}{% endblock %}</h2>
     <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
   </div><!-- End Section Title -->
 
-  <!-- 法規資訊 -->
+  <!-- 最新消息 -->
   <div class="container mb-4" data-aos="fade-up" data-aos-delay="50">
     <h3 class="mb-3">法規資訊</h3>
     
     <!-- 一則消息一個欄位 -->
-    <div class="mb-2">
-      <span class="badge bg-primary me-2">公告</span>
-      <span class="text-primary">依據透水保水自治條例: </span>「透水保水義務人依都市計畫規定設置透水保水相關貯留設施，應負維護責任」
-    </div>
+    {% block lows %}
+    {% endblock %}
 
   </div>
-  <!-- End 法規資訊 -->
+  <!-- End 最新消息 -->
 
   <br/>
 
@@ -34,13 +33,6 @@
       <!-- 左側 Carousel -->
       <div class="col-lg-6">
         <div id="radarCarousel" class="carousel slide" data-bs-ride="carousel">
-
-          <!-- Indicators -->
-          <!-- <div class="carousel-indicators">
-            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          </div> -->
 
           <!-- Carousel items -->
           <div class="carousel-inner">
