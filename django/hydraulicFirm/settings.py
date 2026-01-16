@@ -30,9 +30,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
-ALLOWED_HOSTS = json.loads(
-    os.getenv("ALLOWED_HOSTS_JSON", '["localhost", "127.0.0.1", "web_server"]')
-)
+# ALLOWED_HOSTS = json.loads(
+#     os.getenv("ALLOWED_HOSTS_JSON", '["localhost", "127.0.0.1", "web_server"]')
+# )
+ALLOWED_HOSTS = ["*"]   # for google cloud run
 
 
 # Application definition

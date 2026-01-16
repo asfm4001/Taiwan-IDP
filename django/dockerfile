@@ -11,18 +11,21 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # 4.複製專案 -> container工作目錄
-COPY . .
+COPY requirements.txt .
 
 # 5.pip更新 & 安裝相關套件
 RUN pip install --upgrade pip \
-&& pip install -r requirements.txt
+ && pip install --no-cache-dir -r requirements.txt
 
-# 6.部署靜態資源
+# 6.複製專案
+COPY . .
+
+# 7.部署靜態資源
 # --noinput, 使用預設行為(yes)
 # RUN python manage.py collectstatic --noinput
 
-# 7.(使用docker-compose時，無需使用) 開放8000連接至container
-# EXPOSE 7000
+# 8.(使用docker-compose時，無需使用) 開放8080連接至container
+# EXPOSE 8080
 
-# 8.預設不啟動 (設定當run images自動執行命令)
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8000", "hydraulicFirm.wsgi"]
+# 9.預設不啟動 (設定當run images自動執行命令)
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8080", "hydraulicFirm.wsgi:application"]
