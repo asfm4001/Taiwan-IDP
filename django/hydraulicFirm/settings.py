@@ -29,8 +29,10 @@ load_dotenv(ENV_FILE_PATH)
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG")
-ALLOWED_HOSTS = json.loads(os.getenv("ALLOWED_HOSTS_JSON"))
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+ALLOWED_HOSTS = json.loads(
+    os.getenv("ALLOWED_HOSTS_JSON", '["localhost", "127.0.0.1", "web_server"]')
+)
 
 
 # Application definition
@@ -133,10 +135,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'pages/static',    # 非預設, 覆蓋django原始static路徑
-]
+STATIC_URL = '/static/'
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'pages/static',    # 非預設, 覆蓋django原始static路徑
+    ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # 輸出app static files(for正式環境存取路徑)
 
 # Default primary key field type

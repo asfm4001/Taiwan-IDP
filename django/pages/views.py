@@ -156,7 +156,6 @@ def services_water_level_meter(request):
             # 'title': '瑞士PROCEQ-GS9000陣列式透地雷達',
             # 'caption': '可輕易檢測出路面劣化及沉陷規模及範圍',
         },
-        
     ]
 
     context = {
@@ -262,7 +261,7 @@ class InstanceListView(generic.ListView):
         context['carousel_items'] = carousel_items
         # context['water_retention_pdf'] = "pages/assets/img/instance/water_retention_instance_v4.pdf"
         return context
-    
+
 class ServiceListView(generic.ListView):
     model = Service
 
