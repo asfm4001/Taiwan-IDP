@@ -2,32 +2,44 @@
 ```python
 .
 ├── README.md
-└── django
-    ├── .env                # 環境變數
-    ├── db.sqlite3          # 資料庫
-    ├── dockerfile
-    ├── requirements.txt    # 套件
-    ├── manage.py
-    ├── hydraulicFirm
-    │   ├── __init__.py
-    │   ├── asgi.py         # 非同步部署入口
-    │   ├── jinja2_env.py   # jinja2設定檔
-    │   ├── settings.py     # 設定檔
-    │   ├── urls.py         # 全域URL
-    │   └── wsgi.py         # 部署入口
-    ├── estimates
-    │   ├── __init__.py
-    │   ├── admin.py        # 後台設定檔
-    │   ├── apps.py
-    │   ├── migrations/     # 資料庫版控
-    │   ├── models.py       # 資料庫模型
-    │   ├── static/         # 靜態資源
-    │   ├── templates/      # html模板
-    │   ├── tests/          # 測試檔
-    │   ├── urls.py         # app URL
-    │   └── views.py        # app 邏輯
-    ├── pages/              # app 2
-    └── static/             # 全域靜態資源(部署用)
+├── requirements.txt
+├── manage.py
+├── db.sqlite3
+├── dockerfile
+├── core
+│   ├── __init__.py
+│   ├── asgi.py         # 非同步部署入口
+│   ├── jinja2_env.py   # jinja2設定檔
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── estimates
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── autoNum.py
+│   ├── migrations/
+│   ├── models.py
+│   ├── static/
+│   ├── templates
+│   ├── tests/
+│   ├── urls.py
+│   └── views.py
+├── pages
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── email.py
+│   ├── forms.py
+│   ├── migrations/
+│   ├── models.py
+│   ├── static/
+│   ├── templates/
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── staticfiles/
+└── templates/
 ```
 
 # 套件

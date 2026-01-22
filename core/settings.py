@@ -29,7 +29,7 @@ load_dotenv(ENV_FILE_PATH)
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+DEBUG = os.getenv("DEBUG", False)
 # ALLOWED_HOSTS = json.loads(
 #     os.getenv("ALLOWED_HOSTS_JSON", '["localhost", "127.0.0.1", "web_server"]')
 # )
@@ -61,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'hydraulicFirm.urls'
+ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [
     # {
@@ -69,7 +69,7 @@ TEMPLATES = [
     #     'DIRS': [BASE_DIR / 'jinja2_templates'],
     #     'APP_DIRS': True,
     #     'OPTIONS': {
-    #         'environment': "hydraulicFirm.jinja2_env.environment",
+    #         'environment': "core.jinja2_env.environment",
     #         'autoescape': True,
     #     },
     # },
@@ -88,7 +88,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'hydraulicFirm.wsgi.application'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
@@ -136,11 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'
-if DEBUG:
-    STATICFILES_DIRS = [
-        BASE_DIR / 'pages/static',    # 非預設, 覆蓋django原始static路徑
-    ]
+STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # 輸出app static files(for正式環境存取路徑)
 
 # Default primary key field type

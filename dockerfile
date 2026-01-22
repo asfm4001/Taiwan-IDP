@@ -28,4 +28,4 @@ COPY . .
 # EXPOSE 8080
 
 # 9.預設不啟動 (設定當run images自動執行命令)
-CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8080", "hydraulicFirm.wsgi:application"]
+CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8080", "core.wsgi:application"]
