@@ -2,8 +2,6 @@
 ```python
 .
 ├── README.md
-├── compose.yaml
-├── nginx/
 └── django
     ├── .env                # 環境變數
     ├── db.sqlite3          # 資料庫

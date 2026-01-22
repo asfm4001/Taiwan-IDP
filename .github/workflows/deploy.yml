@@ -3,7 +3,7 @@ name: Deploy Django to Cloud Run
 on:
   push:
     branches:
-      - main
+      - cloudRun
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
