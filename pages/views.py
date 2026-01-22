@@ -1,15 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse
-from django.contrib import messages
 from django.views import generic
-from django.core.mail import send_mail
-from django.core.mail import EmailMessage
-from django.http import HttpResponseRedirect
 from estimates.models import Order
-from pages.email import mailContext
-from pages.forms import ContactForm
 from pages.models import Instance, Service
-import os, json
 
 # Create your views here.
 def index(request):
@@ -37,7 +30,6 @@ def index(request):
     return render(request, 'pages/index.html', context=context)
 
 def about(request):
-    services = Service.objects.all()
     card_items = [
         {
             'title': '基地排水計畫設計',
@@ -209,35 +201,7 @@ def faqs(request):
     return render(request, 'pages/faqs.html')
 
 def contact(request):
-    if request.POST:
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            phone = form.cleaned_data['phone']
-            email = form.cleaned_data['email']
-            line_id = form.cleaned_data['line_id']
-            services_list = form.cleaned_data['services']
-            message = form.cleaned_data['message']
-            msg = mailContext(name, phone, email, line_id, services_list, message)
-            
-            # get target mail list
-            target_mails_list = os.getenv("TARGET_EMAIL")
-            count = send_mail(
-                "台整-客戶諮詢系統通知",
-                msg,
-                '',
-                target_mails_list,
-            )
-            messages.success(request, '已接收您的訊息，我們將盡快與您聯繫')
-            return redirect(reverse('pages:contact'))
-        else:
-            print("表單錯誤: ", form.errors)
-            print(form.errors.as_json())
-    
-    form = ContactForm()
-   
-    context = {'form': form,}
-    return render(request, 'pages/contact.html', context=context)
+    return render(request, 'pages/contact.html')
 
 class OrdersView(generic.ListView):
     template_name = 'pages/orders.html'

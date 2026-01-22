@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
-import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent   # /django
@@ -30,9 +29,6 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", False)
-# ALLOWED_HOSTS = json.loads(
-#     os.getenv("ALLOWED_HOSTS_JSON", '["localhost", "127.0.0.1", "web_server"]')
-# )
 ALLOWED_HOSTS = ["*"]   # for google cloud run
 
 
@@ -48,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'pages.apps.PagesConfig',
     'estimates.apps.EstimatesConfig',
-    'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -151,13 +146,9 @@ CSRF_COOKIE_SECURE = False
 LOGIN_URL = '/admin'
 
 # SMTP Configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  #SMTP伺服器
-EMAIL_PORT = 587  #TLS通訊埠號
-EMAIL_USE_TLS = True  #開啟TLS(傳輸層安全性)
-EMAIL_HOST_USER = os.getenv("EMAIL")  #寄件者電子郵件
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")  #Gmail應用程式的密碼(含空格)
-
-# google reCAPTHA
-RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
-RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'  #SMTP伺服器
+# EMAIL_PORT = 587  #TLS通訊埠號
+# EMAIL_USE_TLS = True  #開啟TLS(傳輸層安全性)
+# EMAIL_HOST_USER = os.getenv("EMAIL")  #寄件者電子郵件
+# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")  #Gmail應用程式的密碼(含空格)

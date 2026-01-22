@@ -1,6 +1,6 @@
 from django import forms
-from django_recaptcha.fields import ReCaptchaField
-from django_recaptcha.widgets import ReCaptchaV3
+# from django_recaptcha.fields import ReCaptchaField
+# from django_recaptcha.widgets import ReCaptchaV3
 
 class ContactForm(forms.Form):
     # 可使用tuple or list, but it's must be 'key' to 'value'.
@@ -16,7 +16,7 @@ class ContactForm(forms.Form):
     ('道路調查', '道路調查'),
     ('工程地質', '工程地質'),
     ('氣象預報', '氣象預報'),
-]
+    ]
     name = forms.CharField(label='姓名', max_length=30, required=False, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     phone = forms.CharField(label='聯絡電話', max_length=11, min_length=10, required=False, widget=forms.TextInput(
@@ -29,4 +29,4 @@ class ContactForm(forms.Form):
         attrs={'class': 'form-check-input'}))
     message = forms.CharField(label='請留下您的訊息', required=False, widget=forms.Textarea(
         attrs={'class': 'form-control', 'row': 4, 'placeholder': '輸入訊息...'}))
-    captcha = ReCaptchaField()
+    # captcha = ReCaptchaField()
