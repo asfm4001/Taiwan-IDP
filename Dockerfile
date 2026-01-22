@@ -22,7 +22,7 @@ COPY . .
 
 # 7.部署靜態資源
 # --noinput, 使用預設行為(yes)
-# RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
 # 8.(使用docker-compose時，無需使用) 開放8080連接至container
 # EXPOSE 8080

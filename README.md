@@ -29,8 +29,6 @@
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py
-│   ├── email.py
-│   ├── forms.py
 │   ├── migrations/
 │   ├── models.py
 │   ├── static/
@@ -44,8 +42,5 @@
 
 # 套件
 * Django==5.1.7
-* dotenv==0.9.9
-* python-dotenv==1.1.0
 * gunicorn==23.0.0
-* Jinja2==3.1.6
-* 
+* whitenoise==6.11.0
