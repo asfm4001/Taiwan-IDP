@@ -20,12 +20,17 @@ RUN pip install --upgrade pip \
 # 6.複製專案
 COPY . .
 
-# 7.部署靜態資源
+# 7.執行DB腳本
+RUN python manage.py migrate
+
+# 8.部署靜態資源
 # --noinput, 使用預設行為(yes)
 RUN python manage.py collectstatic --noinput
 
-# 8.(使用docker-compose時，無需使用) 開放8080連接至container
-# EXPOSE 8080
+RUN python manage.py migrate
 
-# 9.預設不啟動 (設定當run images自動執行命令)
+# 9.(使用docker-compose時，無需使用) 開放8080連接至container
+EXPOSE 8080
+
+# 10.預設不啟動 (設定當run images自動執行命令)
 CMD ["gunicorn", "-w", "1", "-b", "0.0.0.0:8080", "core.wsgi:application"]
