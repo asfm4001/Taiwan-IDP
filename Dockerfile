@@ -21,13 +21,13 @@ RUN pip install --upgrade pip \
 COPY . .
 
 # 7.執行DB腳本
-RUN python manage.py migrate
+# RUN python manage.py migrate
 
 # 8.部署靜態資源
 # --noinput, 使用預設行為(yes)
 RUN python manage.py collectstatic --noinput
 
-RUN python manage.py migrate
+# RUN python manage.py migrate
 
 # 9.(使用docker-compose時，無需使用) 開放8080連接至container
 EXPOSE 8080
