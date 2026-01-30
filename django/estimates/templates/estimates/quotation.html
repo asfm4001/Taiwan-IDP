@@ -9,111 +9,66 @@
   {% load static %}
   
   <link href="{% static 'estimates/assets/css/bootstrap.min.css' %}" rel="stylesheet">
-  <style>
-    @media print {
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      /* 避免頁面自動分頁 */
-      .no-break {
-        page-break-inside: avoid;
-      }
-
-      /* 強制某些區塊不被切割 */
-      .page-break {
-        page-break-before: always;
-      }
-
-      /* 避免表格在中間被切斷 */
-      table {
-        page-break-inside: avoid;
-      }
-
-      /* 隱藏列印時不必要的內容，例如按鈕 */
-      .no-print {
-        display: none;
-      }
-    }
-    body {
-      padding: 40px;
-      background-color: #f8f9fa;
-      font-size: 14px;
-    }
-    .quotation-title {
-      font-size: 2rem;
-      font-weight: bold;
-      margin: 30px 0 20px;
-    }
-    .signature-box {
-      height: 80px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-top: 10px;
-    }
-    .border-box {
-      border: 1px solid #dee2e6;
-      padding: 10px;
-    }
-    .contact-info {
-      font-size: 12px;
-      line-height: 1.5;
-    }
-  </style>
 </head>
 <body>
-  <div class=" bg-white p-4 shadow-sm">
-    <!-- 上方標頭區塊 -->
-    <div class="d-flex align-items-start flex-wrap justify-content-between mb-4">
-        <!-- Logo -->
-        <div class="col-12 col-md-2 text-left mb-2 mb-md-0">
-          <img src="{% static 'estimates/assets/img/台整LOGO.png' %}" alt="公司Logo" class="img-fluid" style="max-height: 80px;">
-        </div>
-      
-        <!-- 公司名稱（中間置中，支援換行） -->
-        <div class="col-12 col-md-8 text-center mb-2 mb-md-0" style="word-break: break-word;">
-          <h4 class="mb-1 company-name">台灣整合防災工程技術顧問有限公司</h4>
-          <h4 class="mb-0 company-name-en">Taiwan Integrated Disaster Prevention of Technology Engineering &amp; Consulting Co.,Ltd.</h4>
-        </div>
-      
-        <!-- 公司資訊（靠右、左對齊） -->
-        <div class="col-12 col-md-2 text-left contact-info">
-          <div>地址：新北市土城區中央路三段281巷15弄14號1樓</div>
-          <div>電話：（02）2274-7498</div>
-          <div>傳真：（02）2274-0899</div>
-        </div>
+  <div class="print-page">
+    <div class="mb-4">
+      <div class="d-flex align-items-center justify-content-center gap-3">
+        <img src="{% static 'estimates/assets/img/台整LOGO.png' %}"
+            alt="公司Logo"
+            style="max-height: 80px;">
+        <h2 class="company-title mb-0">台灣整合防災工程技術顧問有限公司</h2>
       </div>
+    </div>
+    <div class="d-flex align-items-start flex-wrap justify-content-between mb-4">
+      <!-- 公司資訊 -->
+      <div class="contact-info">
+        <div>地址：新北市土城區中央路三段281巷15弄14號1樓</div>
+        <div>電話：（02）2274-7498</div>
+        <div>傳真：（02）2274-0899</div>
+        <div>統編：28368864</div>
+      </div>
+    </div>
 
 
     <!-- 報價單標題 -->
     <div class="text-center">
-      <h1 class="quotation-title">報 價 單 QUOTATION</h1>
+      <h2 class="quotation-title">報 價 單</h2>
     </div>
 
     <!-- 基本資料區 -->
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <p><strong>業主單位：</strong>{{ quotation.client.name }}</p>
-        <p><strong>聯絡人：</strong>{{ quotation.contact_name }}</p>
-        <p><strong>工作名稱：</strong>{{ quotation.name }}</p>
-      </div>
-      <div class="col-md-6">
-        <p><strong>工作地點：</strong>{{ quotation.address }}</p>
-        <p><strong>面積：</strong>{{ quotation.area | intcomma }} 平方公尺</p>
-        <p><strong>詢價日：</strong>{{ quotation.created_date }}</p>
-      </div>
-    </div>
+    <table class="info-table">
+      <tr>
+        <td>
+          <strong>業主單位：</strong>{{ quotation.client.name }}<br>
+          <strong>聯絡人：</strong>{{ quotation.contact_name }}<br>
+          <strong>工作名稱：</strong>{{ quotation.name }}
+        </td>
+        <td>
+          <strong>工作地點：</strong>{{ quotation.address }}<br>
+          <strong>面積：</strong>{{ quotation.area|intcomma }} 平方公尺<br>
+          <strong>詢價日：</strong>{{ quotation.created_date }}
+        </td>
+      </tr>
+    </table>
+
 
     <!-- 報價明細與總金額 -->
     <table class="table table-bordered">
+      <colgroup>
+        <col style="width: 16mm;">   <!-- 項次 -->
+        <col style="width: auto;">   <!-- 工作項目 -->
+        <col style="width: 16mm;">   <!-- 數量 -->
+        <col style="width: 25mm;">   <!-- 單價 -->
+        <col style="width: 30mm;">   <!-- 小計 -->
+      </colgroup>
       <thead class="thead-light">
         <tr>
-          <th>項次</th>
-          <th>工作項目</th>
-          <th>數量</th>
-          <th>單價</th>
-          <th>小計</th>
+          <th style="color: black;">項次</th>
+          <th style="color: black;">工作項目</th>
+          <th style="color: black;">數量</th>
+          <th style="color: black;">單價</th>
+          <th style="color: black;">小計</th>
         </tr>
       </thead>
       <tbody>
@@ -121,91 +76,91 @@
         {% for qi in quotation.quotationproduct_set.all %}
         {% with outer_index=forloop.counter %}
         <tr>
-          <td class="text-center">{{ forloop.counter }}</td>
-          <td>{{ qi.product.name }}</td>
-          <td>{{ qi.quantity }}</td>
-          <td>{{ qi.product.price | intcomma }}</td>
-          <td>{{ qi.get_subtotal }}</td>
+          <td class="text-left align-middle">{{ forloop.counter }}</td>
+          <td><strong class="highlight">{{ qi.product.name }}</strong></td>
+          <td class="align-middle">{{ qi.quantity }}</td>
+          <td class="align-middle">{{ qi.product.price | intcomma }}</td>
+          <td class="align-middle">{{ qi.get_subtotal }}</td>
         </tr>
         {% for subproduct in qi.product.subproducts.all %}
         <!-- 子項目 -->
         <tr>
-          <td class="text-right">{{ outer_index }}.{{ forloop.counter }}</td>
+          <td class="text-left align-middle">{{ outer_index }}-{{ forloop.counter }}</td>
           <td class="pl-4" colspan="4">{{ subproduct.name }}</td>
         </tr>
         {% endfor %}
         {% endwith %}
         {% endfor %}
 
+        <!-- 聯絡資訊 -->
+        <tr class="no-break">
+          <th colspan="2" rowspan="4">
+            <div class="info-row contact-info">
+              <div class="info-text">
+                  <p><strong>技師：</strong>黃禾岳</p>
+                  <p><strong>聯絡電話(LINE)：</strong>0912-345-678</p>
+              </div>
+
+              <div class="info-image">
+                  <img src="{% static 'estimates/assets/img/stamp.png' %}"
+                      alt="用印"
+                      style="height:20mm;">
+              </div>
+            </div>
+            
+            <hr>
+
+            <div class="info-row contact-info">
+              <div class="info-text">
+                  <p><strong>報價&amp;撥款請洽</strong></p>
+                  <p><strong>報價及業務專員：</strong>李慕真</p>
+                  <p><strong>聯絡電話(LINE)：</strong>0912-345-678</p>
+              </div>
+
+              <div class="info-image">
+                  <img src="{% static 'estimates/assets/img/Tiffany-QRcode.jpg' %}" 
+                      alt="報價Line QR Code" 
+                      style="height:20mm;">
+              </div>
+            </div>
+          </th>
+         </tr>
+
         <!-- 合計 -->
-        <tr>
-          <th colspan="4" class="text-right">總計（未稅）：</th>
-          <td>${{ quotation.subtotal }}</td>
+        <tr class="font-weight-bold">
+          <th class="align-middle" colspan="2">總計（未稅）：</th>
+          <td class="align-middle">${{ quotation.subtotal }}</td>
         </tr>
-        <tr>
-          <th colspan="4" class="text-right">稅額（{{ quotation.tax_rate }}%）：</th>
-          <td>${{ quotation.tax_amount }}</td>
+        <tr class="font-weight-bold">
+          <th class="align-middle" colspan="2">報價金額須稅外加 {{ quotation.tax_rate }}%營業稅：</th>
+          <td class="align-middle">${{ quotation.tax_amount }}</td>
         </tr>
-        <tr>
-          <th colspan="4" class="text-right font-weight-bold">總計（含稅）：</th>
-          <td class="font-weight-bold">${{ quotation.total_with_tax }}</td>
+        <tr class="font-weight-bold">
+          <th class="align-middle" colspan="2">總計（含稅）：</th>
+          <td class="align-middle">${{ quotation.total_with_tax }}</td>
         </tr>
       </tbody>
     </table>
 
-    <!-- 備註區 -->
-<div class="mb-3">
-  <p><strong>備註：</strong></p>
-  <div class="border-box d-flex flex-wrap align-items-start">
-    <!-- 備註內容 -->
-    <div class="flex-grow-1 pr-3" style="min-width: 250px;">
-      <ul class="mb-0 pl-3">
-        <!-- <li>{{ quotation.note }}</li> -->
-        <li>本估價單有效期限 七 日（含例假日）
-        <li>如蒙惠顧，請於下方確認簽名蓋章，傳真回傳，謝謝！</li>
-        <li>付款方式：掛件後請領 30%，剩下尾款 70% 於核定後給付</li>
-        <li>本公司銀行帳號：台灣整合防災工程技術顧問有限公司</li>
-        <li>（007）第一銀行 土城分行 205-10-024861</li>
-        <li>統編：28368864</li>
-      </ul>
-    </div>
+    <table class="remark-signature-table">
+      <tr>
+        <td class="remark-col">
+          <p><strong>備註：</strong></p>
+          <div class="border-box small">
+            <p>{{ quotation.note|linebreaks }}</p>
+          </div>
+        </td>
 
-    <!-- 用印圖（會在小螢幕自動換行） -->
-    <div class="mt-3 mt-md-0">
-      <img src="{% static 'estimates/assets/img/stamp.png' %}" alt="用印" style="height: 150px;">
-    </div>
-  </div>
-</div>
-  
-  
-  
+        <td class="sign-col">
+          <p><strong>顧客簽名蓋章：</strong></p>
+          <div class="signature-box">
+            <div class="signature-content">（簽名 / 蓋章處）</div>
+            <div class="sign-date"><strong>簽訂日期：</strong> （簽訂日期處）</div>
+          </div>
+        </td>
+      </tr>
+    </table>
 
-    <!-- 簽章與簽訂日期區 -->
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <p><strong>顧客簽名蓋章：</strong></p>
-            <div class="signature-box" style="height: 150px;">
-                （簽名 / 蓋章處）
-                <p style="position: absolute; bottom: 5px; left: 30px;"><strong>簽訂日期：</strong> （簽訂日期處）</p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="mb-3">
-                <p><strong>技師：</strong>黃禾岳</p>
-                <div class="contact-info">
-                  <p><strong>聯絡電話(LINE)：</strong>0912-345-678</p>
-                </div>
-                <hr>
-                <p><strong>報價&amp;撥款請洽</strong></p>
-                <div class="contact-info">
-                  <p><strong>工務助理：</strong>李慕真</p>
-                  <p><strong>聯絡電話(LINE)：</strong>0912-345-678</p>
-                </div>
-              </div>
-        </div>
-    </div>
-  
-  
 
     <!-- 底部註記 -->
     <hr>
