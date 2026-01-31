@@ -6,8 +6,6 @@ on:
       - cloudRun
 
 env:
-  # PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  # REGION: asia-east1
   SERVICE: django-app
   REPO: django-repo
 
@@ -38,6 +36,32 @@ jobs:
         --tag $IMAGE_NAME \
         --quiet \
         --async
+    
+    # 一次性jobs套件
+    - name: Install gcloud beta
+      run: gcloud components install beta --quiet
+
+    # 執行 migrate（使用 Cloud Run Jobs）
+    - name: Run Django Migrations
+      run: |
+        IMAGE_NAME=gcr.io/${{ secrets.GCP_PROJECT_ID }}/django-app:latest
+        # 建立 Cloud Run Job（只需第一次，之後可以重複執行）
+        gcloud beta run jobs update django-migrate-job \
+          --image $IMAGE_NAME \
+          --region ${{ secrets.GCP_REGION }} \
+          --set-env-vars "POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }}" \
+          --tasks 1 \
+          --command "python manage.py migrate" \
+          --memory 512Mi \
+          --quiet || \
+        gcloud beta run jobs create django-migrate-job \
+          --image $IMAGE_NAME \
+          --region ${{ secrets.GCP_REGION }} \
+          --set-env-vars "POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }}" \
+          --tasks 1 \
+          --command "python manage.py migrate" \
+          --memory 512Mi \
+          --quiet
 
     # 部署到 Cloud Run
     - name: Deploy to Cloud Run
@@ -47,27 +71,5 @@ jobs:
           --image $IMAGE_NAME \
           --region ${{ secrets.GCP_REGION }} \
           --platform managed \
-          --allow-unauthenticated
-
-    # - name: Configure Docker
-    #   run: |
-    #     gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
-
-    # - name: Build Docker image
-    #   run: |
-    #     docker build \
-    #       -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/django:$GITHUB_SHA \
-    #       -f django/Dockerfile \
-    #       django
-
-    # - name: Push Docker image
-    #   run: |
-    #     docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/django:$GITHUB_SHA
-
-    # - name: Deploy to Cloud Run
-    #   run: |
-    #     gcloud run deploy $SERVICE \
-    #       --image $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/django:$GITHUB_SHA \
-    #       --region $REGION \
-    #       --platform managed \
-    #       --allow-unauthenticated
+          --allow-unauthenticated \
+          --set-env-vars "POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }}"

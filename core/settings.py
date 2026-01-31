@@ -28,7 +28,7 @@ load_dotenv(ENV_FILE_PATH)
 SECRET_KEY = os.getenv("SECRET_KEY", "DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", False)
+DEBUG = os.getenv("DEBUG", False) == 'True'
 ALLOWED_HOSTS = ["*"]   # for google cloud run
 
 
@@ -92,11 +92,14 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("POSTGRESQL_DB_NAME"),                # 資料庫名稱
+        'USER': os.getenv("POSTGRESQL_DB_USER"),                # PostgreSQL 使用者
+        'PASSWORD': os.getenv("POSTGRESQL_DB_PASSWORD"),
+        'HOST': os.getenv("POSTGRESQL_DB_HOST"),                # DB server IP
+        'PORT': os.getenv("POSTGRESQL_DB_PORT", '5432'),        # PostgreSQL 預設 port
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
