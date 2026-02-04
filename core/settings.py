@@ -143,8 +143,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # 輸出app static files(for
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# For HTTP(default = True)
-CSRF_COOKIE_SECURE = False
+# CSRF 信任來源
+CSRF_TRUSTED_ORIGINS = [
+    "https://django-app-529979500146.asia-east1.run.app",
+]
+# HTTPS 設定
+SECURE_PROXY_SSL_HEADER = ("X-Forwarded-Proto", "https")
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = "Lax"
 
 # 無權限造訪轉入URL
 LOGIN_URL = '/admin'
