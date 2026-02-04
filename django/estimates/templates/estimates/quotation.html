@@ -14,19 +14,19 @@
   <div class="print-page">
     <div class="mb-4">
       <div class="d-flex align-items-center justify-content-center gap-3">
-        <img src="{% static 'estimates/assets/img/台整LOGO.png' %}"
+        <img src="{% static quotation.company.icon %}"
             alt="公司Logo"
             style="max-height: 80px;">
-        <h2 class="company-title mb-0">台灣整合防災工程技術顧問有限公司</h2>
+        <h2 class="company-title mb-0">{{ quotation.company.title }}</h2>
       </div>
     </div>
     <div class="d-flex align-items-start flex-wrap justify-content-between mb-4">
       <!-- 公司資訊 -->
       <div class="contact-info">
-        <div>地址：新北市土城區中央路三段281巷15弄14號1樓</div>
-        <div>電話：（02）2274-7498</div>
-        <div>傳真：（02）2274-0899</div>
-        <div>統編：28368864</div>
+        <div>地址：{{ quotation.company.address }}</div>
+        <div>電話：{{ quotation.company.phone }}</div>
+        <div>傳真：{{ quotation.company.fax }}</div>
+        <div>統編：{{ quotation.company.tax_code }}</div>
       </div>
     </div>
 
@@ -95,6 +95,7 @@
         <!-- 聯絡資訊 -->
         <tr class="no-break">
           <th colspan="2" rowspan="4">
+            {% if quotation.company.engineer_display %}
             <div class="info-row contact-info">
               <div class="info-text">
                   <p><strong>技師：</strong>黃禾岳</p>
@@ -102,14 +103,14 @@
               </div>
 
               <div class="info-image">
-                  <img src="{% static 'estimates/assets/img/stamp.png' %}"
+                  <img src="{% static quotation.company.stamp %}"
                       alt="用印"
                       style="height:20mm;">
               </div>
             </div>
             
             <hr>
-
+            {% endif %}
             <div class="info-row contact-info">
               <div class="info-text">
                   <p><strong>報價&amp;撥款請洽</strong></p>

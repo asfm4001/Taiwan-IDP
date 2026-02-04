@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, reverse
 from django.core.handlers.wsgi import WSGIRequest
-from .models import Client, Order, Product, OrderProduct, Quotation, QuotationProduct, SubProduct
+from .models import Client, Order, Product, OrderProduct, Quotation, QuotationProduct, SubProduct, Company
 from .views import CustomAdminPageView as CustomView
 # Register your models here.
 
@@ -21,6 +21,15 @@ class SubProductInline(admin.TabularInline):
     model = SubProduct
     fields = ['name']
     extra = 1
+
+class CompanyAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('公司資料', {
+            'fields': [('title', 'tax_code'), 'address', ('phone', 'fax'), 'engineer_display'],
+            # "classes": ["collapse"]
+        })
+    ]
+    list_display = ["title", "tax_code", "address"]
 
 class ClientAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -44,6 +53,7 @@ class ProductAdmin(admin.ModelAdmin):
 class QuotationAdmin(admin.ModelAdmin):
     readonly_fields = ['subtotal', 'tax_amount', 'total_with_tax', 'number']
     fieldsets = [
+        ('公司', {'fields': ['company']}),
         ('業主資訊', {'fields': ['client']}),
         ('報價單資訊', {'fields': ['number', 'name', ('address', 'area', 'status'), 'contact_name', 'tax_rate', 'note']}),
         ('當前報價', {'fields': [('subtotal', 'tax_amount'), 'total_with_tax'], 'description': '當前報價會在儲存後自動更新'}),
@@ -111,6 +121,7 @@ class OrderAdmin(admin.ModelAdmin):
 # admin_site.register(Order, OrderAdmin)
 # admin_site.register(Quotation, QuotationAdmin)
 
+admin.site.register(Company, CompanyAdmin)
 admin.site.register(Client, ClientAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Order, OrderAdmin)

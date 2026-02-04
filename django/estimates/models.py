@@ -3,6 +3,21 @@ from django.contrib import admin
 from decimal import Decimal, ROUND_HALF_UP
 from estimates.autoNum import AutoNumberMixin
 
+class Company(models.Model):
+    title = models.CharField('公司名稱', max_length=40, unique=True)
+    address = models.CharField('地址', max_length=100, blank=True, null=True)
+    phone = models.CharField('電話', max_length=20, blank=True, null=True)
+    fax = models.CharField('傳真', max_length=20, blank=True, null=True)
+    tax_code = models.CharField('統編', max_length=20, blank=True, null=True)
+    icon = models.CharField(max_length=255, blank=True, null=True)
+    stamp = models.CharField(max_length=255, blank=True, null=True)
+    engineer_display = models.BooleanField('技師顯示', default=True)
+    class Meta:
+        verbose_name = '公司'
+        verbose_name_plural = '公司管理'
+    def __str__(self):
+        return self.title
+
 class Client(models.Model):
     name = models.CharField('客戶名稱', max_length=20)
     gui = models.CharField('客戶統編', max_length=8, blank=True, null=True) # Government Uniform Invoice number
@@ -42,6 +57,7 @@ class Quotation(AutoNumberMixin, models.Model):
         'rejected': '已拒絕',
     }
     number_prefix = 'Q'  # 流水號前綴
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, through='QuotationProduct')
 
