@@ -13,7 +13,4 @@ __pycache__
 # log日誌
 django.log*
 
-# django靜態檔
-staticfiles
-
 dockerfile

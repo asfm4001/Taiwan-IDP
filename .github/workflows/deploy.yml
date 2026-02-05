@@ -48,6 +48,7 @@ jobs:
         # 建立 Cloud Run Job（只需第一次，之後可以重複執行）
         gcloud beta run jobs update django-migrate-job \
           --image $IMAGE_NAME \
+          --vpc-connector ${{ secrets.GCP_CONNECTOR_NAME }} \
           --region ${{ secrets.GCP_REGION }} \
           --set-env-vars "POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }}" \
           --tasks 1 \
@@ -56,6 +57,7 @@ jobs:
           --quiet || \
         gcloud beta run jobs create django-migrate-job \
           --image $IMAGE_NAME \
+          --vpc-connector ${{ secrets.GCP_CONNECTOR_NAME }} \
           --region ${{ secrets.GCP_REGION }} \
           --set-env-vars "POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }}" \
           --tasks 1 \
@@ -69,6 +71,7 @@ jobs:
         IMAGE_NAME=gcr.io/${{ secrets.GCP_PROJECT_ID }}/django-app:latest
         gcloud run deploy django-app \
           --image $IMAGE_NAME \
+          --vpc-connector ${{ secrets.GCP_CONNECTOR_NAME}} \
           --region ${{ secrets.GCP_REGION }} \
           --platform managed \
           --allow-unauthenticated \
