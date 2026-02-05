@@ -3,17 +3,16 @@ name: Deploy Django to Cloud Run
 on:
   push:
     branches:
-      - main
+      - cloudRun
 
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  REGION: asia-east1
   SERVICE: django-app
   REPO: django-repo
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: prod
 
     steps:
     - name: Checkout
@@ -26,26 +25,55 @@ jobs:
 
     - name: Setup gcloud
       uses: google-github-actions/setup-gcloud@v2
+      with:
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        export_default_credentials: true
 
-    - name: Configure Docker
+    # Build Docker image 並 push 到 GCR
+    - name: Build and push Docker image
       run: |
-        gcloud auth configure-docker $REGION-docker.pkg.dev --quiet
+        IMAGE_NAME=gcr.io/${{ secrets.GCP_PROJECT_ID }}/django-app:latest
+        gcloud builds submit \
+        --tag $IMAGE_NAME \
+        --quiet \
+        --async
+    
+    # 一次性jobs套件
+    - name: Install gcloud beta
+      run: gcloud components install beta --quiet
 
-    - name: Build Docker image
+    # 執行 migrate（使用 Cloud Run Jobs）
+    - name: Run Django Migrations
       run: |
-        docker build \
-          -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/django:$GITHUB_SHA \
-          -f django/Dockerfile \
-          django
+        IMAGE_NAME=gcr.io/${{ secrets.GCP_PROJECT_ID }}/django-app:latest
+        # 建立 Cloud Run Job（只需第一次，之後可以重複執行）
+        gcloud beta run jobs update django-migrate-job \
+          --image $IMAGE_NAME \
+          --vpc-connector ${{ secrets.GCP_CONNECTOR_NAME }} \
+          --region ${{ secrets.GCP_REGION }} \
+          --set-env-vars "POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }}" \
+          --tasks 1 \
+          --command "python manage.py migrate" \
+          --memory 512Mi \
+          --quiet || \
+        gcloud beta run jobs create django-migrate-job \
+          --image $IMAGE_NAME \
+          --vpc-connector ${{ secrets.GCP_CONNECTOR_NAME }} \
+          --region ${{ secrets.GCP_REGION }} \
+          --set-env-vars "POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }}" \
+          --tasks 1 \
+          --command "python manage.py migrate" \
+          --memory 512Mi \
+          --quiet
 
-    - name: Push Docker image
-      run: |
-        docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/django:$GITHUB_SHA
-
+    # 部署到 Cloud Run
     - name: Deploy to Cloud Run
       run: |
-        gcloud run deploy $SERVICE \
-          --image $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/django:$GITHUB_SHA \
-          --region $REGION \
+        IMAGE_NAME=gcr.io/${{ secrets.GCP_PROJECT_ID }}/django-app:latest
+        gcloud run deploy django-app \
+          --image $IMAGE_NAME \
+          --vpc-connector ${{ secrets.GCP_CONNECTOR_NAME}} \
+          --region ${{ secrets.GCP_REGION }} \
           --platform managed \
-          --allow-unauthenticated
+          --allow-unauthenticated \
+          --set-env-vars "POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }}"

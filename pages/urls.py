@@ -1,0 +1,13 @@
+from django.urls import path
+from . import views
+
+app_name = 'pages'
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('about/', views.about, name='about'),
+    path('service/', views.ServiceListView.as_view(), name='service_list'),
+    path('service/<int:pk>', views.ServiceDetailView.as_view(), name='service_detail'),
+    path('instances/', views.InstanceListView.as_view(), name='instance_list'),
+    path('contact/', views.contact, name='contact'),
+    # path('orders/', views.OrdersView.as_view(), name='orders'),
+]

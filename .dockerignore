@@ -1,7 +1,7 @@
 .env
 .venv
 
-db.sqlite3
+# db.sqlite3
 
 # python執行檔
 __pycache__
@@ -13,5 +13,4 @@ __pycache__
 # log日誌
 django.log*
 
-# django靜態檔
-staticfiles/
+dockerfile
