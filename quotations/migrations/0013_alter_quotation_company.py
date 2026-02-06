@@ -7,14 +7,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('estimates', '0012_alter_company_options_quotation_company_and_more'),
+        ('quotations', '0012_alter_company_options_quotation_company_and_more'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='quotation',
             name='company',
-            field=models.ForeignKey(default=2, on_delete=django.db.models.deletion.CASCADE, to='estimates.company'),
+            field=models.ForeignKey(default=2, on_delete=django.db.models.deletion.CASCADE, to='quotations.company'),
             preserve_default=False,
         ),
     ]

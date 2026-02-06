@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
                 ('contact_name', models.CharField(blank=True, max_length=10, verbose_name='聯絡人姓名')),
                 ('contact_phone', models.CharField(blank=True, max_length=10, verbose_name='聯絡人電話')),
                 ('note', models.TextField(blank=True, verbose_name='備註')),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estimates.client')),
+                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quotations.client')),
             ],
         ),
         migrations.CreateModel(
@@ -48,14 +48,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.IntegerField(default=1, verbose_name='數量')),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estimates.order')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estimates.product')),
+                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quotations.order')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quotations.product')),
             ],
         ),
         migrations.AddField(
             model_name='order',
             name='products',
-            field=models.ManyToManyField(through='estimates.OrderProduct', to='estimates.product'),
+            field=models.ManyToManyField(through='quotations.OrderProduct', to='quotations.product'),
         ),
         migrations.CreateModel(
             name='Quotation',
@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
                 ('created_date', models.DateField(verbose_name='訂單日期')),
                 ('amount', models.IntegerField(blank=True, verbose_name='總金額(已稅)')),
                 ('note', models.TextField(blank=True, verbose_name='備註')),
-                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estimates.client')),
+                ('client', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quotations.client')),
             ],
         ),
         migrations.CreateModel(
@@ -76,13 +76,13 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('quantity', models.IntegerField(default=1, verbose_name='數量')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estimates.product')),
-                ('quotation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='estimates.quotation')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quotations.product')),
+                ('quotation', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='quotations.quotation')),
             ],
         ),
         migrations.AddField(
             model_name='quotation',
             name='products',
-            field=models.ManyToManyField(through='estimates.QuotationProduct', to='estimates.product'),
+            field=models.ManyToManyField(through='quotations.QuotationProduct', to='quotations.product'),
         ),
     ]

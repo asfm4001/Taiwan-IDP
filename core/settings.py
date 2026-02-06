@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'pages.apps.PagesConfig',
-    'estimates.apps.EstimatesConfig',
+    'quotations.apps.QuotationsConfig',
     # 'django_recaptcha',
 ]
 

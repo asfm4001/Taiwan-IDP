@@ -13,7 +13,7 @@
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
-├── estimates
+├── quotations
 │   ├── __init__.py
 │   ├── admin.py
 │   ├── apps.py

@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('estimates', '0004_change_col_name_of_product_and_order'),
+        ('quotations', '0004_change_col_name_of_product_and_order'),
     ]
 
     operations = [

@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.utils import timezone
-from estimates.models import Client, Product, Quotation, QuotationProduct, Order, OrderProduct, SubProduct
+from quotations.models import Client, Product, Quotation, QuotationProduct, Order, OrderProduct, SubProduct
 from datetime import date
 from decimal import Decimal
 

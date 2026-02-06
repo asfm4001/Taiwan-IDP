@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('estimates', '0005_alter_client_options_alter_order_options_and_more'),
+        ('quotations', '0005_alter_client_options_alter_order_options_and_more'),
     ]
 
     operations = [
@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=120, verbose_name='子工作項目')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='subproducts', to='estimates.product')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='subproducts', to='quotations.product')),
             ],
         ),
     ]

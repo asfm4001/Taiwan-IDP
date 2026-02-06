@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('estimates', '0007_quotation_number_quotation_status_and_more'),
+        ('quotations', '0007_quotation_number_quotation_status_and_more'),
     ]
 
     operations = [

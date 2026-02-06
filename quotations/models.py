@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib import admin
 from decimal import Decimal, ROUND_HALF_UP
-from estimates.autoNum import AutoNumberMixin
+from quotations.autoNum import AutoNumberMixin
 
 class Company(models.Model):
     title = models.CharField('公司名稱', max_length=40, unique=True)

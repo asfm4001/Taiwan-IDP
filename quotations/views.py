@@ -12,7 +12,7 @@ from .models import Quotation, Order
 # from django_weasyprint import WeasyTemplateResponse
 
 def index(request):
-    return render(request, 'estimates/index.html')
+    return render(request, 'quotations/index.html')
 
 @staff_member_required
 def pdf(request, order_no):
@@ -21,7 +21,7 @@ def pdf(request, order_no):
 
     response = WeasyTemplateResponse(
         request=request,
-        template='estimates/quotation.html',   # html模板
+        template='quotations/quotation.html',   # html模板
         context=context,
         filename='report.pdf',         # 'report.pdf'預設為自動下載
         attachment=True
@@ -57,15 +57,15 @@ def admin_view(self, view, cacheable=False):
 def convert_quotation_to_order(request, pk):
     quotation = Quotation.objects.filter(pk = pk).first()
     order = quotation.convert_to_order()
-    url = reverse("admin:estimates_order_change", args=[order.pk])
+    url = reverse("admin:quotations_order_change", args=[order.pk])
     link = f'<a href="{url}">{order.number}</a>'
     messages.success(request, mark_safe(f'成功新增了 order“{link}”。'))
-    return redirect('/admin/estimates/order')
+    return redirect('/admin/quotations/order')
 
 
 # class DetailView(DetailView):
 #     model = Order
-#     template_name = 'estimates/detail.html'
+#     template_name = 'quotations/detail.html'
     
 #     # overwrite default
 #     def get_context_data(self, **kwargs):
@@ -76,7 +76,7 @@ def convert_quotation_to_order(request, pk):
 
 class QuotationPreviewView(LoginRequiredMixin, DetailView):
     model = Quotation
-    template_name = 'estimates/quotation.html'
+    template_name = 'quotations/quotation.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

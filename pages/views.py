@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.views import generic
-from estimates.models import Order
+from quotations.models import Order
 from pages.models import Instance, Service
 
 # Create your views here.

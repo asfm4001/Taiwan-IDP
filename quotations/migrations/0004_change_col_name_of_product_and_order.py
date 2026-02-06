@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('estimates', '0003_change_client_col_name'),
+        ('quotations', '0003_change_client_col_name'),
     ]
 
     operations = [
