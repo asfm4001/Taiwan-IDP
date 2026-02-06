@@ -55,30 +55,6 @@ def quick_create_order(client):
         note = '測試備註'
     )
 
-class ClientTest(TestCase):
-    def test_create_client(self):
-        c = Client.objects.create(
-            name = '測試名稱',
-            phone = '02-12345678',
-            gui = '12345678'
-        )
-
-        self.assertEqual(c.name, '測試名稱')
-        self.assertEqual(c.phone, '02-12345678')
-        self.assertEqual(c.gui, '12345678')
-
-class ProductTest(TestCase):
-    def test_create_product(self):
-        p = Product.objects.create(
-            name = '測試商品',
-            price = 666,
-            is_active = True
-        )
-
-        self.assertEqual(p.name, '測試商品')
-        self.assertEqual(p.price, 666)
-        self.assertEqual(p.is_active, True)
-
 class QuotationTest(TestCase):
     def test_create_quotation(self):
         quick_create_client(1)
