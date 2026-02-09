@@ -30,6 +30,7 @@ class QuotationTest(TestCase):
 
     def test_method_quotation_convert_to_order(self):
         self.assertIsInstance(self.o, Order)
+        self.assertEqual(self.o.company, self.q.company)
         self.assertEqual(self.o.client, self.q.client)
         self.assertEqual(self.o.name, self.q.name)
         self.assertEqual(self.o.address, self.q.address)
