@@ -52,6 +52,7 @@ class Quotation(AutoNumberMixin, models.Model):
     def convert_to_order(self):
         # 1. create order 
         order = Order.objects.create(
+            company = self.company,
             client = self.client,
             name = self.name,
             address = self.address,
