@@ -2,9 +2,9 @@ name: Deploy Django to Cloud Run
 
 on:
   push:
-    branches:
-      - main
-      - cloudRun
+    # branches:
+    #   - main
+    #   - cloudRun
 
 env:
   SERVICE: django-app
@@ -16,12 +16,24 @@ jobs:
     environment: devp
 
     steps:
-    - name: Run Pytest
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Build Docker image for testing
       run: |
-        pytest -v
+        docker build -t django-test-image:latest .
+
+    - name: Run Pytest inside Docker
+      run: |
+        docker run --rm \
+          -e DB_SERVER=${{ vars.DB_SERVER }} \
+          -e SECRET_KEY="${{ secrets.SECRET_KEY }}" \
+          django-test-image:latest pytest -v
 
   deploy:
+    needs: test
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/cloudRun'
     environment: prod
 
     steps:
