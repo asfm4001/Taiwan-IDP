@@ -1,19 +1,18 @@
 from django.test import TestCase
 from quotations.tests.factories import (
-    QuotationFactory,
+    OrderFactory,
     ProductFactory,
-    QuotationProductFactory
+    OrderProductFactory
 )
-
-class QuotationProductTest(TestCase):
+class OrderProductTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.q = QuotationFactory()
+        cls.o = OrderFactory()
         cls.p = ProductFactory(price=100, is_active=True)
-        cls.qp = QuotationProductFactory(
-            quotation = cls.q, 
+        cls.op = OrderProductFactory(
+            order = cls.o, 
             product = cls.p,
             quantity = 2)
 
     def test_get_subtotal_with_quotation_and_products(self):
-        self.assertEquals(self.qp.get_subtotal, 200)
+        self.assertEquals(self.op.get_subtotal, self.op.quantity * self.p.price)
