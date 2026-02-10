@@ -5,7 +5,7 @@ class CompanyFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Company
 
-    title = '測試公司'
+    title = factory.Sequence(lambda n: f"測試公司 {n}")
     address = '測試地址'
     phone = '(02)-23456789'
     fax = '(02)-23456789'
