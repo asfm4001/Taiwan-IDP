@@ -15,4 +15,4 @@ class OrderProductTest(TestCase):
             quantity = 2)
 
     def test_get_subtotal_with_quotation_and_products(self):
-        self.assertEquals(self.op.get_subtotal, self.op.quantity * self.p.price)
+        self.assertEqual(self.op.get_subtotal, self.op.quantity * self.p.price)

@@ -11,6 +11,15 @@ env:
   REPO: django-repo
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: devp
+
+    steps:
+    - name: Run Pytest
+      run: |
+        pytest -v
+
   deploy:
     runs-on: ubuntu-latest
     environment: prod
