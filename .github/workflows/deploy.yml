@@ -57,8 +57,7 @@ jobs:
         IMAGE_NAME=gcr.io/${{ secrets.GCP_PROJECT_ID }}/django-app:latest
         gcloud builds submit \
         --tag $IMAGE_NAME \
-        --quiet \
-        --async
+        --quiet
     
     # 一次性jobs套件
     - name: Install gcloud beta
@@ -75,7 +74,8 @@ jobs:
           --region ${{ secrets.GCP_REGION }} \
           --set-env-vars "DB_SERVER=${{ vars.DB_SERVER }},SECRET_KEY=${{ secrets.SECRET_KEY }},POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }},POSTGRESQL_DB_PORT=${{ secrets.POSTGRESQL_DB_PORT }}" \
           --tasks 1 \
-          --command "python manage.py migrate" \
+          --command python \
+          --args manage.py,migrate \
           --memory 512Mi \
           --quiet || \
         gcloud beta run jobs create django-migrate-job \
@@ -84,8 +84,14 @@ jobs:
           --region ${{ secrets.GCP_REGION }} \
           --set-env-vars "DB_SERVER=${{ vars.DB_SERVER }},SECRET_KEY=${{ secrets.SECRET_KEY }},POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }},POSTGRESQL_DB_PORT=${{ secrets.POSTGRESQL_DB_PORT }}" \
           --tasks 1 \
-          --command "python manage.py migrate" \
+          --command python \
+          --args manage.py,migrate \
           --memory 512Mi \
+          --quiet
+
+        gcloud beta run jobs execute django-migrate-job \
+          --region ${{ secrets.GCP_REGION }} \
+          --wait \
           --quiet
 
     # 部署到 Cloud Run
