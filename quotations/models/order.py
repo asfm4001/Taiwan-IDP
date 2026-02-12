@@ -1,7 +1,6 @@
 from django.db import models
 from decimal import Decimal, ROUND_HALF_UP
 from quotations.autoNum import AutoNumberMixin
-from quotations.models import Company, Client, Product
 
 class Order(AutoNumberMixin, models.Model):
     order_status_choice = {
@@ -13,9 +12,9 @@ class Order(AutoNumberMixin, models.Model):
         'cancelled': '已取消',
     }
     number_prefix = 'Order'
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, through='OrderProduct')
+    company = models.ForeignKey('quotations.Company', on_delete=models.CASCADE)
+    client = models.ForeignKey('quotations.Client', on_delete=models.CASCADE)
+    products = models.ManyToManyField('quotations.Product', through='OrderProduct')
 
     name = models.CharField('工作名稱', max_length=100, null=True)
     number = models.CharField('訂單編號', max_length=20, unique=True, editable=False)

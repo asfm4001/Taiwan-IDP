@@ -4,6 +4,7 @@ class Product(models.Model):
     name = models.CharField('施工品項', max_length=60)
     price = models.IntegerField('單價')
     is_active = models.BooleanField('啟用狀態', default=True)
+    is_template = models.BooleanField('模板指示', default=False)
     class Meta:
         verbose_name = '工作項目'
         verbose_name_plural = '工作項目'
@@ -11,7 +12,7 @@ class Product(models.Model):
         return self.name
 
 class SubProduct(models.Model):
-    product = models.ForeignKey(Product, related_name='subproducts', on_delete=models.CASCADE)
+    product = models.ForeignKey('quotations.Product', related_name='subproducts', on_delete=models.CASCADE)
     name = models.CharField('子工作項目', max_length=120)
     def __str__(self):
         return self.name

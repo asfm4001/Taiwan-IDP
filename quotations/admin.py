@@ -53,6 +53,7 @@ class ProductAdmin(admin.ModelAdmin):
 class QuotationAdmin(admin.ModelAdmin):
     readonly_fields = ['subtotal', 'tax_amount', 'total_with_tax', 'number']
     fieldsets = [
+        ('模板指示', {'fields': ['is_template']}),
         ('公司', {'fields': ['company']}),
         ('業主資訊', {'fields': ['client']}),
         ('報價單資訊', {'fields': ['number', 'name', ('address', 'area', 'status'), 'contact_name', 'tax_rate', 'note']}),
@@ -60,7 +61,7 @@ class QuotationAdmin(admin.ModelAdmin):
     ]
     inlines = [QuotationProductInline]
     search_fields = ['address']
-    list_display = ['number', 'address', 'subtotal', 'tax_rate','total_with_tax' , 'created_date', 'status']
+    list_display = ['number', 'address', 'subtotal', 'tax_rate','total_with_tax' , 'created_date', 'status', 'is_template']
     view_on_site = True
     ordering = ['created_date']
 

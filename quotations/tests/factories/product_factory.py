@@ -8,3 +8,4 @@ class ProductFactory(factory.django.DjangoModelFactory):
     name = '測試工作項目'
     price = 100
     is_active = True
+    is_template = False

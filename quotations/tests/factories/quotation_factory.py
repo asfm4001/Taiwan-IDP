@@ -18,3 +18,4 @@ class QuotationFactory(factory.django.DjangoModelFactory):
     tax_rate = Decimal('5')
     status = 'draft'
     note = '測試備註'
+    is_template = False

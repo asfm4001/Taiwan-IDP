@@ -62,6 +62,19 @@ def convert_quotation_to_order(request, pk):
     messages.success(request, mark_safe(f'成功新增了 order“{link}”。'))
     return redirect('/admin/quotations/order')
 
+@staff_member_required
+def clone_from_template(request, pk):
+    """報價單模板轉為報價單，"""
+    quotation_template = Quotation.objects.filter(pk = pk).first()
+    if quotation_template.is_template is False:
+        messages.error(request, '非模板不可輸出報價單。')
+        return redirect(reverse("admin:quotations_quotation_change", args=[quotation_template.pk]))
+
+    new_quotation = quotation_template.clone_from_template()
+    url = reverse("admin:quotations_quotation_change", args=[new_quotation.pk])
+    link = f'<a href="{url}">{new_quotation.number}</a>'
+    messages.success(request, mark_safe(f'成功新增了 quotation“{link}”。'))
+    return redirect('/admin/quotations/quotation')
 
 # class DetailView(DetailView):
 #     model = Order

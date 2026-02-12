@@ -1,0 +1,64 @@
+{% load i18n admin_urls %}
+<div class="submit-row">
+{% block submit-row %}
+{% if show_save %}<input type="submit" value="{% translate 'Save' %}" class="default" name="_save">{% endif %}
+{% if show_save_as_new %}<input type="submit" value="{% translate 'Save as new' %}" name="_saveasnew">{% endif %}
+{% if show_save_and_add_another %}<input type="submit" value="{% translate 'Save and add another' %}" name="_addanother">{% endif %}
+{% if show_save_and_continue %}<input type="submit" value="{% if can_change %}{% translate 'Save and continue editing' %}{% else %}{% translate 'Save and view' %}{% endif %}" name="_continue">{% endif %}
+{% if opts.model_name == "quotation" or opts.model_name == "order" %}
+    <style>
+        .preview-quotation-link,
+        .preview-order-link,
+        .export-link {
+            display: inline-block;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-left: 10px;
+            color: white !important;
+        }
+
+        .preview-quotation-link {
+            background-color: #09869f; /* 藍色 */
+        }
+
+        .preview-quotation-link:hover {
+            background-color: rgb(8, 100, 119);
+        }
+
+        .export-link {
+            background-color: #119230; /* 綠色 */
+        }
+
+        .export-link:hover {
+            background-color: #1e7e34;
+        }
+        .preview-order-link {
+            background-color: #cf640d; /* 橘色 */
+        }
+
+        .preview-order-link:hover {
+            background-color: #9f4d09;
+        }
+    </style>
+    {% if original.pk != None %}
+        {% if opts.model_name == "quotation"  %}
+        <a href="{% url 'quotations:preview_quotation' pk=original.pk %}" class="preview-quotation-link" target="_blank" rel="noopener noreferrer">預覽報價單</a>
+        <a href="{% url 'quotations:convert_quotation_to_order' pk=original.pk %}" class="export-link">輸出訂單</a>
+        <a href="{% url 'quotations:clone_from_template' pk=original.pk %}" class="preview-order-link">模板輸出報價單</a>
+        {% elif  opts.model_name == "order" %}
+        <a href="#" class="preview-order-link">預覽訂單</a>
+        {% endif %}
+    {% endif %}
+{% endif %}
+{% if show_close %}
+    {% url opts|admin_urlname:'changelist' as changelist_url %}
+    <a href="{% add_preserved_filters changelist_url %}" class="closelink">{% translate 'Close' %}</a>
+{% endif %}
+{% if show_delete_link and original %}
+    {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+    <a href="{% add_preserved_filters delete_url %}" class="deletelink">{% translate "Delete" %}</a>
+{% endif %}
+{% endblock %}
+</div>

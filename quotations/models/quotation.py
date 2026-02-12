@@ -1,10 +1,6 @@
-from django.db import models
+from django.db import models, transaction
 from decimal import Decimal, ROUND_HALF_UP
 from quotations.autoNum import AutoNumberMixin
-from quotations.models.company import Company
-from quotations.models.client import Client
-from quotations.models.product import Product
-from quotations.models.order import Order, OrderProduct
 
 class Quotation(AutoNumberMixin, models.Model):
     quotation_status_choice = {
@@ -15,13 +11,13 @@ class Quotation(AutoNumberMixin, models.Model):
         'rejected': '已拒絕',
     }
     number_prefix = 'Q'  # 流水號前綴
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, through='QuotationProduct')
+    company = models.ForeignKey('quotations.Company', on_delete=models.CASCADE)
+    client = models.ForeignKey('quotations.Client', on_delete=models.CASCADE)
+    products = models.ManyToManyField('quotations.Product', through='QuotationProduct')
 
     name = models.CharField('施作名稱', max_length=100, null=True)
     number = models.CharField('報價單編號', max_length=20, unique=True, editable=False)
-    address = models.CharField('施作地址', max_length=100)
+    address = models.CharField('施作地址', max_length=100, blank=True, null=True)
     contact_name = models.CharField('聯絡人姓名', max_length=20, blank=True, null=True)
     # contact_phone = models.CharField('聯絡人電話', max_length=10, blank=True)
     
@@ -31,9 +27,11 @@ class Quotation(AutoNumberMixin, models.Model):
     tax_rate = models.DecimalField(max_digits=9, decimal_places=0, default=5)
     status = models.CharField('狀態', max_length=20, choices=quotation_status_choice, blank=True, default='')
     note = models.TextField('備註', blank=True, null=True)
+    is_template = models.BooleanField('模板指示', default=False)
+
     class Meta:
-            verbose_name = '報價單'
-            verbose_name_plural = '報價單'
+        verbose_name = '報價單'
+        verbose_name_plural = '報價單'
     def __str__(self):
         return self.number
     
@@ -50,6 +48,7 @@ class Quotation(AutoNumberMixin, models.Model):
         return self.subtotal + self.tax_amount
     
     def convert_to_order(self):
+        from quotations.models import Order, OrderProduct
         # 1. create order 
         order = Order.objects.create(
             company = self.company,
@@ -69,10 +68,80 @@ class Quotation(AutoNumberMixin, models.Model):
                 quantity = item.quantity
             )
         return order
+    
+    def clone_from_template(self):
+        from quotations.models import Product, SubProduct, QuotationProduct
+
+        with transaction.atomic():
+            # 1.create new quotation
+            new_quotation = Quotation.objects.create(
+                company = self.company,
+                client = self.client,
+                name = self.name,
+                address = self.address,
+                contact_name = self.contact_name,
+                area = self.area,
+                tax_rate = self.tax_rate,
+                status = 'draft',
+                note = self.note,
+                is_template = False
+            )
+
+            # 2.query qp
+            quotation_products = list(
+                self.quotationproduct_set
+                .select_related('product')
+                .prefetch_related('product__subproducts')
+            )
+
+            new_products = []
+            new_qp_relations = []
+            new_subproducts = []
+
+            # 3.create product
+            for qp in quotation_products:
+                product = qp.product
+                new_products.append(
+                    Product(
+                        name = product.name,
+                        price = product.price,
+                        is_active = product.is_active,
+                        is_template = False
+                    )
+                )
+            # 批次建立product
+            Product.objects.bulk_create(new_products)
+
+            # 4. create subproduct, quotationproduct
+            for qp, new_product in zip(quotation_products, new_products):
+                # create subproduct
+                for sp in qp.product.subproducts.all():
+                    new_subproducts.append(
+                            SubProduct(
+                                product=new_product,
+                                name=sp.name
+                            )
+                        )
+
+                # create qp
+                new_qp_relations.append(
+                    QuotationProduct(
+                        quotation=new_quotation,
+                        product=new_product,
+                        quantity=qp.quantity
+                    )
+                )
+
+            # 批次建立subproduct, quotationproduct
+            SubProduct.objects.bulk_create(new_subproducts)
+            QuotationProduct.objects.bulk_create(new_qp_relations)
+
+            return new_quotation
+
 
 class QuotationProduct(models.Model):
-    quotation = models.ForeignKey('Quotation', on_delete=models.CASCADE)
-    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    quotation = models.ForeignKey('quotations.Quotation', on_delete=models.CASCADE)
+    product = models.ForeignKey('quotations.Product', on_delete=models.CASCADE)
     quantity = models.IntegerField('數量', default=1)
 
     def __str__(self):
