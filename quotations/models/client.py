@@ -3,7 +3,9 @@ from django.db import models
 class Client(models.Model):
     name = models.CharField('客戶名稱', max_length=20)
     gui = models.CharField('客戶統編', max_length=8, blank=True, null=True) # Government Uniform Invoice number
-    phone = models.CharField('聯絡電話', max_length=10, blank=True, null=True)
+    phone = models.CharField('聯絡電話', max_length=20, blank=True, null=True)
+    contact_name = models.CharField('聯絡人姓名', max_length=20, blank=True, null=True)
+    contact_phone = models.CharField('聯絡人電話', max_length=20, blank=True, null=True)
     # @admin.display(
     #     boolean=True,
     #     ordering='order_date',

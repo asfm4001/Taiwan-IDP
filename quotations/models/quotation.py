@@ -18,8 +18,6 @@ class Quotation(AutoNumberMixin, models.Model):
     name = models.CharField('施作名稱', max_length=100, null=True)
     number = models.CharField('報價單編號', max_length=20, unique=True, editable=False)
     address = models.CharField('施作地址', max_length=100, blank=True, null=True)
-    contact_name = models.CharField('聯絡人姓名', max_length=20, blank=True, null=True)
-    # contact_phone = models.CharField('聯絡人電話', max_length=10, blank=True)
     
     # order_status = models.CharField('報價單狀態', max_length=10, default='未啟動')
     area = models.FloatField('面積', blank=True, null=True)
@@ -56,7 +54,6 @@ class Quotation(AutoNumberMixin, models.Model):
             name = self.name,
             address = self.address,
             area = self.area,
-            contact_name = self.contact_name,
             tax_rate = self.tax_rate,
             note = self.note
         )
@@ -79,7 +76,6 @@ class Quotation(AutoNumberMixin, models.Model):
                 client = self.client,
                 name = self.name,
                 address = self.address,
-                contact_name = self.contact_name,
                 area = self.area,
                 tax_rate = self.tax_rate,
                 status = 'draft',

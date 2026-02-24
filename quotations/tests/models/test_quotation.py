@@ -40,7 +40,7 @@ class QuotationTest(TestCase):
 
         field_list = [
             "company", "client", "name", "address", "area", 
-            "contact_name", "tax_rate", "note", 
+            "tax_rate", "note", 
 
             "subtotal", "tax_amount", "total_with_tax"
             ]
@@ -69,7 +69,6 @@ class QuotationTest(TestCase):
         self.assertEqual(new_q.client, q_temp.client)
         self.assertEqual(new_q.name, q_temp.name)
         self.assertEqual(new_q.address, q_temp.address)
-        self.assertEqual(new_q.contact_name, q_temp.contact_name)
         self.assertEqual(new_q.area, q_temp.area)
         self.assertEqual(new_q.tax_rate, q_temp.tax_rate)
         self.assertEqual(new_q.status, q_temp.status)

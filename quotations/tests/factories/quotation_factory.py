@@ -13,7 +13,6 @@ class QuotationFactory(factory.django.DjangoModelFactory):
 
     name = '測試施作'
     address = '測試地址'
-    contact_name = '測試聯絡人'
     area = 100
     tax_rate = Decimal('5')
     status = 'draft'

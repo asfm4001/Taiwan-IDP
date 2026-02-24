@@ -34,7 +34,7 @@ class CompanyAdmin(admin.ModelAdmin):
 class ClientAdmin(admin.ModelAdmin):
     fieldsets = [
         ('客戶資料', {
-            'fields': [('name', 'phone'), 'gui'],
+            'fields': [('name', 'phone'), 'gui', ('contact_name', 'contact_phone')],
             # "classes": ["collapse"]
         })
     ]
@@ -56,7 +56,7 @@ class QuotationAdmin(admin.ModelAdmin):
         ('模板指示', {'fields': ['is_template']}),
         ('公司', {'fields': ['company']}),
         ('業主資訊', {'fields': ['client']}),
-        ('報價單資訊', {'fields': ['number', 'name', ('address', 'area', 'status'), 'contact_name', 'tax_rate', 'note']}),
+        ('報價單資訊', {'fields': ['number', 'name', ('address', 'area', 'status'), 'tax_rate', 'note']}),
         ('當前報價', {'fields': [('subtotal', 'tax_amount'), 'total_with_tax'], 'description': '當前報價會在儲存後自動更新'}),
     ]
     inlines = [QuotationProductInline]
