@@ -1,9 +1,22 @@
 from django.contrib import admin
 from django.urls import path, reverse
 from django.core.handlers.wsgi import WSGIRequest
-from .models import Client, Order, Product, OrderProduct, Quotation, QuotationProduct, SubProduct, Company
+from .models import (
+    Company,
+    Client, 
+    Order,  OrderProduct,
+    Product, SubProduct,
+    Quotation, QuotationProduct,
+    WorkType, WorkTypeProduct
+)
 from .views import CustomAdminPageView as CustomView
 # Register your models here.
+
+class WorkTypeProductInline(admin.TabularInline):
+    model = WorkTypeProduct
+    fields = ['product', 'quantity', 'get_subtotal']
+    readonly_fields = ['get_subtotal']
+    extra = 1
 
 class QuotationProductInline(admin.TabularInline):
     model = QuotationProduct
@@ -41,6 +54,11 @@ class ClientAdmin(admin.ModelAdmin):
     search_fields = ["name"]
     list_display = ["name", "phone", "gui"]
     
+class WorkTypeAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('工作類型', {'fields': ['name', 'note']})
+    ]
+    inlines = [WorkTypeProductInline]
 class ProductAdmin(admin.ModelAdmin):
     fieldsets = [
         ('施工品項', {
@@ -124,6 +142,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Client, ClientAdmin)
+admin.site.register(WorkType, WorkTypeAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Quotation, QuotationAdmin)
