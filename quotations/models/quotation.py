@@ -25,7 +25,6 @@ class Quotation(AutoNumberMixin, models.Model):
     tax_rate = models.DecimalField(max_digits=9, decimal_places=0, default=5)
     status = models.CharField('狀態', max_length=20, choices=quotation_status_choice, blank=True, default='')
     note = models.TextField('備註', blank=True, null=True)
-    is_template = models.BooleanField('模板指示', default=False)
 
     class Meta:
         verbose_name = '報價單'
@@ -66,73 +65,71 @@ class Quotation(AutoNumberMixin, models.Model):
             )
         return order
     
-    def clone_from_template(self):
-        from quotations.models import Product, SubProduct, QuotationProduct
+    # def clone_from_template(self):
+    #     from quotations.models import Product, SubProduct, QuotationProduct
 
-        with transaction.atomic():
-            # 1.create new quotation
-            new_quotation = Quotation.objects.create(
-                company = self.company,
-                client = self.client,
-                name = self.name,
-                address = self.address,
-                area = self.area,
-                tax_rate = self.tax_rate,
-                status = 'draft',
-                note = self.note,
-                is_template = False
-            )
+    #     with transaction.atomic():
+    #         # 1.create new quotation
+    #         new_quotation = Quotation.objects.create(
+    #             company = self.company,
+    #             client = self.client,
+    #             name = self.name,
+    #             address = self.address,
+    #             area = self.area,
+    #             tax_rate = self.tax_rate,
+    #             status = 'draft',
+    #             note = self.note
+    #         )
 
-            # 2.query qp
-            quotation_products = list(
-                self.quotationproduct_set
-                .select_related('product')
-                .prefetch_related('product__subproducts')
-            )
+    #         # 2.query qp
+    #         quotation_products = list(
+    #             self.quotationproduct_set
+    #             .select_related('product')
+    #             .prefetch_related('product__subproducts')
+    #         )
 
-            new_products = []
-            new_qp_relations = []
-            new_subproducts = []
+    #         new_products = []
+    #         new_qp_relations = []
+    #         new_subproducts = []
 
-            # 3.create product
-            for qp in quotation_products:
-                product = qp.product
-                new_products.append(
-                    Product(
-                        name = product.name,
-                        price = product.price,
-                        is_active = product.is_active,
-                        is_template = False
-                    )
-                )
-            # 批次建立product
-            Product.objects.bulk_create(new_products)
+    #         # 3.create product
+    #         for qp in quotation_products:
+    #             product = qp.product
+    #             new_products.append(
+    #                 Product(
+    #                     name = product.name,
+    #                     price = product.price,
+    #                     is_active = product.is_active
+    #                 )
+    #             )
+    #         # 批次建立product
+    #         Product.objects.bulk_create(new_products)
 
-            # 4. create subproduct, quotationproduct
-            for qp, new_product in zip(quotation_products, new_products):
-                # create subproduct
-                for sp in qp.product.subproducts.all():
-                    new_subproducts.append(
-                            SubProduct(
-                                product=new_product,
-                                name=sp.name
-                            )
-                        )
+    #         # 4. create subproduct, quotationproduct
+    #         for qp, new_product in zip(quotation_products, new_products):
+    #             # create subproduct
+    #             for sp in qp.product.subproducts.all():
+    #                 new_subproducts.append(
+    #                         SubProduct(
+    #                             product=new_product,
+    #                             name=sp.name
+    #                         )
+    #                     )
 
-                # create qp
-                new_qp_relations.append(
-                    QuotationProduct(
-                        quotation=new_quotation,
-                        product=new_product,
-                        quantity=qp.quantity
-                    )
-                )
+    #             # create qp
+    #             new_qp_relations.append(
+    #                 QuotationProduct(
+    #                     quotation=new_quotation,
+    #                     product=new_product,
+    #                     quantity=qp.quantity
+    #                 )
+    #             )
 
-            # 批次建立subproduct, quotationproduct
-            SubProduct.objects.bulk_create(new_subproducts)
-            QuotationProduct.objects.bulk_create(new_qp_relations)
+    #         # 批次建立subproduct, quotationproduct
+    #         SubProduct.objects.bulk_create(new_subproducts)
+    #         QuotationProduct.objects.bulk_create(new_qp_relations)
 
-            return new_quotation
+    #         return new_quotation
 
 
 class QuotationProduct(models.Model):

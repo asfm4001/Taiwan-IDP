@@ -60,8 +60,9 @@ class QuotationTest(TestCase):
         self.assertEqual(op.product, self.p)
         self.assertEqual(op.quantity, self.qp.quantity)
 
+    @pytest.mark.skip(reason="move clone_from_template from quotation to worktype")
     def test_method_clone_from_template_cloumn_is_correct(self):
-        q_temp = QuotationFactory(tax_rate=10, is_template=True)
+        q_temp = QuotationFactory(tax_rate=10)
 
         new_q = q_temp.clone_from_template()
         self.assertIsInstance(new_q, Quotation)
@@ -73,14 +74,14 @@ class QuotationTest(TestCase):
         self.assertEqual(new_q.tax_rate, q_temp.tax_rate)
         self.assertEqual(new_q.status, q_temp.status)
         self.assertEqual(new_q.note, q_temp.note)
-        self.assertFalse(new_q.is_template)
     
-    @pytest.mark.current
+    # @pytest.mark.current
+    @pytest.mark.skip(reason="move clone_from_template from quotation to worktype")
     def test_method_clone_from_template_products_is_correct(self):
-        q_temp = QuotationFactory(tax_rate=10, is_template=True)
+        q_temp = QuotationFactory(tax_rate=10)
 
-        p1_temp = ProductFactory(price=100, is_template=True)
-        p2_temp = ProductFactory(price=200, is_template=True)
+        p1_temp = ProductFactory(price=100)
+        p2_temp = ProductFactory(price=200)
 
         SubProductFactory(product=p1_temp)
         SubProductFactory(product=p1_temp)

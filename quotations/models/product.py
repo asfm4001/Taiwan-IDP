@@ -4,7 +4,6 @@ class Product(models.Model):
     name = models.CharField('施工品項', max_length=60)
     price = models.IntegerField('單價')
     is_active = models.BooleanField('啟用狀態', default=True)
-    is_template = models.BooleanField('模板指示', default=False)
     class Meta:
         verbose_name = '工作項目'
         verbose_name_plural = '工作項目'

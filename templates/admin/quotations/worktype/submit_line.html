@@ -5,7 +5,7 @@
 {% if show_save_as_new %}<input type="submit" value="{% translate 'Save as new' %}" name="_saveasnew">{% endif %}
 {% if show_save_and_add_another %}<input type="submit" value="{% translate 'Save and add another' %}" name="_addanother">{% endif %}
 {% if show_save_and_continue %}<input type="submit" value="{% if can_change %}{% translate 'Save and continue editing' %}{% else %}{% translate 'Save and view' %}{% endif %}" name="_continue">{% endif %}
-{% if opts.model_name == "quotation" or opts.model_name == "order" %}
+{% if opts.model_name == "worktype" %}
     <style>
         .preview-quotation-link,
         .preview-order-link,
@@ -43,11 +43,8 @@
         }
     </style>
     {% if original.pk != None %}
-        {% if opts.model_name == "quotation"  %}
-        <a href="{% url 'quotations:preview_quotation' pk=original.pk %}" class="preview-quotation-link" target="_blank" rel="noopener noreferrer">預覽報價單</a>
-        <a href="{% url 'quotations:convert_quotation_to_order' pk=original.pk %}" class="export-link">輸出訂單</a>
-        {% elif  opts.model_name == "order" %}
-        <a href="#" class="preview-order-link">預覽訂單</a>
+        {% if opts.model_name == "worktype"  %}
+        <a href="{% url 'quotations:clone_from_worktype' pk=original.pk %}" class="export-link">輸出報價單</a>
         {% endif %}
     {% endif %}
 {% endif %}

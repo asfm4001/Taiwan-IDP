@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import TemplateView, DetailView
 from django.utils.safestring import mark_safe
@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.admin.views.main import ERROR_FLAG
 from django.contrib.admin.views.decorators import staff_member_required # function-based view
 from django.contrib.auth.mixins import LoginRequiredMixin   # class-based view
-from .models import Quotation, Order
+from .models import Quotation, Order, WorkType
 
 # 僅Linux環境可執行
 # from django_weasyprint import WeasyTemplateResponse
@@ -62,18 +62,39 @@ def convert_quotation_to_order(request, pk):
     messages.success(request, mark_safe(f'成功新增了 order“{link}”。'))
     return redirect('/admin/quotations/order')
 
-@staff_member_required
-def clone_from_template(request, pk):
-    """報價單模板轉為報價單，"""
-    quotation_template = Quotation.objects.filter(pk = pk).first()
-    if quotation_template.is_template is False:
-        messages.error(request, '非模板不可輸出報價單。')
-        return redirect(reverse("admin:quotations_quotation_change", args=[quotation_template.pk]))
+# @staff_member_required
+# def clone_from_template(request, pk):
+#     """報價單模板轉為報價單，"""
+#     quotation_template = Quotation.objects.filter(pk = pk).first()
+#     if quotation_template.is_template is False:
+#         messages.error(request, '非模板不可輸出報價單。')
+#         return redirect(reverse("admin:quotations_quotation_change", args=[quotation_template.pk]))
 
-    new_quotation = quotation_template.clone_from_template()
+#     new_quotation = quotation_template.clone_from_template()
+#     url = reverse("admin:quotations_quotation_change", args=[new_quotation.pk])
+#     link = f'<a href="{url}">{new_quotation.number}</a>'
+#     messages.success(request, mark_safe(f'成功新增了 quotation“{link}”。'))
+#     return redirect('/admin/quotations/quotation')
+
+@staff_member_required
+def clone_from_worktype(request, pk):
+    """工作項目類型輸出報價單"""
+    worktype = get_object_or_404(WorkType, pk=pk)
+
+    try:
+        new_quotation = worktype.clone_from_template()
+    except Exception as e:
+        messages.error(request, f'產生報價單失敗：{e}')
+        return redirect(
+            reverse("admin:app_worktype_change", args=[worktype.pk])
+        )
+
     url = reverse("admin:quotations_quotation_change", args=[new_quotation.pk])
     link = f'<a href="{url}">{new_quotation.number}</a>'
-    messages.success(request, mark_safe(f'成功新增了 quotation“{link}”。'))
+
+    messages.success(request, mark_safe(f'成功新增報價單「{link}」。'))
+
+    # return redirect(reverse("admin:quotations_quotation_changelist"))
     return redirect('/admin/quotations/quotation')
 
 # class DetailView(DetailView):
