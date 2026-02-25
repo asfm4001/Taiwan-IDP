@@ -9,3 +9,5 @@ from .quotation_factory import QuotationFactory
 from .subProduct_factory import SubProductFactory
 from .quotation_product_factory import QuotationProductFactory
 from .order_product_factory import OrderProductFactory
+from .worktype_factory import WorkTypeFactory
+from .workType_product_factory import WorkTypeProductFactory
