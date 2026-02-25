@@ -1,18 +1,13 @@
-from django.test import TestCase
+import pytest
+from decimal import Decimal
 from quotations.tests.factories import (
-    OrderFactory,
     ProductFactory,
     OrderProductFactory
 )
-class OrderProductTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.o = OrderFactory()
-        cls.p = ProductFactory(price=100, is_active=True)
-        cls.op = OrderProductFactory(
-            order = cls.o, 
-            product = cls.p,
-            quantity = 2)
 
-    def test_get_subtotal_with_quotation_and_products(self):
-        self.assertEqual(self.op.get_subtotal, self.op.quantity * self.p.price)
+pytestmark = pytest.mark.django_db
+
+def test_get_subtotal_with_quotation_and_products():
+    p = ProductFactory(price=100)
+    op = OrderProductFactory(product=p, quantity=2)
+    assert op.get_subtotal == Decimal('200')

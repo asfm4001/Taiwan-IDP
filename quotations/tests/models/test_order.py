@@ -1,31 +1,32 @@
-from django.test import TestCase
+import pytest
+from decimal import Decimal
 from quotations.tests.factories import (
     OrderFactory, 
     ProductFactory,
     OrderProductFactory
 )
 
-class OrderTest(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.o = OrderFactory(tax_rate=10)
-        cls.p = ProductFactory(price=200)
-        cls.op = OrderProductFactory(
-            order = cls.o,
-            product = cls.p,
-            quantity = 2
-        )
+pytestmark = pytest.mark.django_db
 
-    def test_create_order_has_company_and_client(self):
-        # smoke test(測試關聯，不測試邏輯)
-        self.assertIsNotNone(self.o.company)
-        self.assertIsNotNone(self.o.client)
-        
-    def test_subtotal_with_quotationproducts(self):
-        self.assertEqual(self.o.subtotal, self.op.quantity * self.p.price)
+# -------------------------
+# 基本建立測試, smoke test(測試關聯，不測試邏輯)
+# -------------------------
 
-    def test_tax_amount(self):
-        self.assertEqual(self.o.tax_amount, self.o.subtotal * self.o.tax_rate / 100)
+def test_create_order_has_company_and_client():
+    # smoke test(測試關聯，不測試邏輯)
+    o = OrderFactory()
+    assert o.company.__class__.__name__ == "Company"
+    assert o.client.__class__.__name__ == "Client"
 
-    def test_total_with_tax(self):
-        self.assertEqual(self.o.total_with_tax, self.o.subtotal + self.o.tax_amount)
+# -------------------------
+# 金額計算測試
+# -------------------------
+
+def test_subtotal_with_orderproducts():
+    o = OrderFactory(tax_rate=10)
+    p = ProductFactory(price=200)
+    OrderProductFactory(order=o, product=p, quantity=2)
+
+    assert o.subtotal == Decimal('400')
+    assert o.tax_amount == Decimal('40')
+    assert o.total_with_tax == Decimal('440')
