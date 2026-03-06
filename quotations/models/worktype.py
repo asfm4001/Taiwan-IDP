@@ -23,6 +23,7 @@ class WorkType(models.Model):
             new_quotation = Quotation.objects.create(
                 company = self.company,
                 client = self.client,
+                work_type = self,
                 name = self.name,
                 status = 'draft',
                 note = self.note

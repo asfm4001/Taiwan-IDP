@@ -17,6 +17,7 @@ def test_clone_from_template_cloumn_is_correct():
 
     assert new_q.company == w.company
     assert new_q.client == w.client
+    assert new_q.work_type == w
     assert new_q.name == w.name
     assert new_q.note == w.note
 
