@@ -14,6 +14,7 @@ class Quotation(AutoNumberMixin, models.Model):
     company = models.ForeignKey('quotations.Company', on_delete=models.CASCADE)
     client = models.ForeignKey('quotations.Client', on_delete=models.CASCADE)
     products = models.ManyToManyField('quotations.Product', through='QuotationProduct')
+    work_type = models.ForeignKey('quotations.WorkType', on_delete=models.SET_NULL, null=True, blank=True)
 
     name = models.CharField('施作名稱', max_length=100, null=True)
     number = models.CharField('報價單編號', max_length=20, unique=True, editable=False)

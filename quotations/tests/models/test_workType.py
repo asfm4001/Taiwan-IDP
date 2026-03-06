@@ -18,6 +18,7 @@ class WorkTypeTest(TestCase):
         self.assertIsInstance(new_q, Quotation)
         self.assertEqual(new_q.company, self.w.company)
         self.assertEqual(new_q.client, self.w.client)
+        self.assertEqual(new_q.work_type, self.w)
         self.assertEqual(new_q.name, self.w.name)
         self.assertEqual(new_q.note, self.w.note)
 

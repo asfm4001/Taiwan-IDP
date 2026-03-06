@@ -80,7 +80,7 @@ class QuotationAdmin(admin.ModelAdmin):
     ]
     inlines = [QuotationProductInline]
     search_fields = ['address']
-    list_display = ['number', 'address', 'subtotal', 'tax_rate','total_with_tax' , 'created_date', 'status']
+    list_display = ['number', 'address', 'subtotal', 'tax_rate','total_with_tax' , 'created_date', 'status', 'work_type']
     view_on_site = True
     ordering = ['created_date']
 
