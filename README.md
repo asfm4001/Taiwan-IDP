@@ -48,3 +48,4 @@
 # Logs
 ### 20260512
 * 將Google Cloud Run轉址至[https://taiwan-idp.com/](taiwan-idp.com/)，保留原Cloud Run網址
+* 修正Django4.0以上`CSRF_TRUSTED_ORIGINS`需新增前綴"https://"

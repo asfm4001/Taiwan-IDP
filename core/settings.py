@@ -159,9 +159,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CSRF 信任來源
 CSRF_TRUSTED_ORIGINS = [
-    "django-app-529979500146.asia-east1.run.app",   # for google cloud run
-    "taiwan-idp.com",
-    "www.taiwan-idp.com"
+    "https://django-app-529979500146.asia-east1.run.app",   # for google cloud run
+    "https://taiwan-idp.com",
+    "https://www.taiwan-idp.com",
+    "http://localhost",
+    "http://127.0.0.1",
 ]
 # HTTPS 設定
 SECURE_PROXY_SSL_HEADER = ("X-Forwarded-Proto", "https")
