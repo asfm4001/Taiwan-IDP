@@ -91,7 +91,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DB_SERVER = os.getenv("DB_SERVER", "devp")
 
 if DB_SERVER == 'prod':
-    ALLOWED_HOSTS = ["django-app-529979500146.asia-east1.run.app"]   # for google cloud run
+    ALLOWED_HOSTS = [
+        "django-app-529979500146.asia-east1.run.app",   # for google cloud run
+        "taiwan-idp.com",
+        "www.taiwan-idp.com"
+                     ]   
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -155,7 +159,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CSRF 信任來源
 CSRF_TRUSTED_ORIGINS = [
-    "https://django-app-529979500146.asia-east1.run.app",
+    "django-app-529979500146.asia-east1.run.app",   # for google cloud run
+    "taiwan-idp.com",
+    "www.taiwan-idp.com"
 ]
 # HTTPS 設定
 SECURE_PROXY_SSL_HEADER = ("X-Forwarded-Proto", "https")

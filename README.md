@@ -44,3 +44,7 @@
 * Django==5.1.7
 * gunicorn==23.0.0
 * whitenoise==6.11.0
+
+# Logs
+### 20260512
+* 將Google Cloud Run轉址至[https://taiwan-idp.com/](taiwan-idp.com/)，保留原Cloud Run網址
