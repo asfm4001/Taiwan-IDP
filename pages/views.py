@@ -114,6 +114,10 @@ class InstanceListView(generic.ListView):
 
 class ServiceListView(generic.ListView):
     model = Service
+    
+    def get_queryset(self):
+        services =  super().get_queryset()
+        return services.filter(is_active=True).order_by('pk')
 
 class ServiceDetailView(generic.DetailView):
     model = Service
