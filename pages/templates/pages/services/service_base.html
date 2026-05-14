@@ -13,14 +13,14 @@
   </div><!-- End Section Title -->
 
   <!-- 最新消息 -->
-  {% if object.article_set.all %}
+  {% if news_list %}
   <div class="container mb-4" data-aos="fade-up" data-aos-delay="50">
     <h3 class="mb-3">相關法規</h3>
     
-    {% for article in object.article_set.all %}
+    {% for news in news_list %}
     <div class="mb-2">
-      <span class="badge bg-{{ article.type }} me-2">{{ article.title }}</span>
-      {{ article.context|safe }}
+      <span class="badge bg-{{ news.type }} me-2">{{ news.title }}</span>
+      {{ news.context|safe }}
     </div>
     {% endfor %}
   </div>
@@ -75,4 +75,5 @@
   </div>
 </div>
 </section><!-- /Portfolio Details Section -->
+{% block section2 %}{% endblock %}
 {% endblock %}

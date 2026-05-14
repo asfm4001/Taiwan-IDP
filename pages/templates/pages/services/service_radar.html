@@ -21,3 +21,23 @@
 {% endfor %}
 </div>
 {% endblock %}
+
+{% block section2 %}
+<section id="portfolio-details" class="portfolio-details section">
+    <!-- Section Title -->
+    <div class="container section-title aos-init aos-animate" data-aos="fade-up">
+        <h2>透地雷達技術應用於建築基地的創新解決方案</h2>
+    </div>
+
+    <div class="container">
+      <div class="card mb-3">
+        <img src="{% static scan_img %}" class="card-img-top" alt="台北市大安區新生南路三段16巷雷達探測圖" style="background-color: black;">
+        <div class="card-body">
+          <h5 class="card-title">台北市大安區新生南路三段16巷</h5>
+          <p class="card-text">此處為台北市大安區某建築現地，根據法規必須要施工前進行地球物理探測，並結合AR提供即時與準確的結果。</p>
+        </div>
+      </div>
+    </div>
+
+</section>
+{% endblock %}
