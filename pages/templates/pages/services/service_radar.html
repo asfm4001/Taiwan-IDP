@@ -1,0 +1,23 @@
+{% extends 'pages/services/service_base.html' %}
+{% load static %}
+{% block dm %}
+<!-- Indicators -->
+<div class="carousel-indicators">
+    <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#radarCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+</div>
+
+<!-- Carousel items -->
+<div class="carousel-inner">
+{% for item in carousel_items %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+    <img src="{% static item.image_url %}" class="d-block w-100" alt="{{ item.title }}">
+    <div class="carousel-caption bg-dark bg-opacity-50 p-2 rounded">
+        <h6 style="color: #ffc107;">{{ item.title }}</h6>
+        <p>{{ item.caption }}</p>
+    </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}

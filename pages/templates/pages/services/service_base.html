@@ -1,0 +1,78 @@
+{% extends 'pages/base.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% block container %}
+{% load static %}
+
+<!-- Portfolio Details Section -->
+<section id="portfolio-details" class="portfolio-details section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>{{ title }}</h2>
+    <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
+  </div><!-- End Section Title -->
+
+  <!-- 最新消息 -->
+  {% if object.article_set.all %}
+  <div class="container mb-4" data-aos="fade-up" data-aos-delay="50">
+    <h3 class="mb-3">相關法規</h3>
+    
+    {% for article in object.article_set.all %}
+    <div class="mb-2">
+      <span class="badge bg-{{ article.type }} me-2">{{ article.title }}</span>
+      {{ article.context|safe }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <br/>
+
+  <!-- Content (可以加圖文內容區) -->
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="row align-items-start mb-5" data-aos="fade-up">
+      
+      <!-- 左側 Carousel -->
+      <div class="col-lg-6">
+        <div id="radarCarousel" class="carousel slide" data-bs-ride="carousel">
+          {% block dm %}
+          {% if image %}
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{{ image }}" class="d-block w-100" alt="台整透水保水設施檢查DM">
+              </div>
+          </div>
+          {% endif %}
+          {% endblock %}
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        {% if timing %}
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-clock-fill me-2 text-warning"></i> 提送時機
+        </h3>
+        <p>{{ timing|safe }}</p>
+        {% endif %}
+
+        {% if range %}
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-geo-alt-fill me-2 text-warning"></i> 調查範圍
+        </h3>
+        <p>{{ range|safe }}</p>
+        {% endif %}
+
+        {% if certificate %}
+        <h3 class="mt-4 mb-3">
+          <i class="bi bi-pencil-square me-2 text-warning"></i> 簽證
+        </h3>
+        <p>{{ certificate|safe }}</p>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+</section><!-- /Portfolio Details Section -->
+{% endblock %}
