@@ -1,0 +1,15 @@
+{% extends 'pages/services/service_base.html' %}
+{% load static %}
+{% block dm %}
+{% if image %}
+<!-- Carousel items -->
+<div class="carousel-inner">
+    <div class="carousel-item active">
+    <img src="{{ image }}" class="d-block w-100" alt="{{ title }}DM">
+    </div>
+</div>
+{% endif %}
+{% for media in mediae %}
+<a href="{% static media.path %}" download>{{ media.title }}</a>
+{% endfor %}
+{% endblock %}

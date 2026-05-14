@@ -1,5 +1,5 @@
 {% extends 'pages/base.html' %}
-{% block title %}{{ object.title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block container %}
 {% load static %}
 
@@ -8,19 +8,19 @@
 
   <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
-    <h2>{{ object.title }}</h2>
+    <h2>{{ title }}</h2>
     <!-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p> -->
   </div><!-- End Section Title -->
 
   <!-- 最新消息 -->
-  {% if object.article_set.all %}
+  {% if news_list %}
   <div class="container mb-4" data-aos="fade-up" data-aos-delay="50">
     <h3 class="mb-3">相關法規</h3>
     
-    {% for article in object.article_set.all %}
+    {% for news in news_list %}
     <div class="mb-2">
-      <span class="badge bg-{{ article.type }} me-2">{{ article.title }}</span>
-      {{ article.context|safe }}
+      <span class="badge bg-{{ news.type }} me-2">{{ news.title }}</span>
+      {{ news.context|safe }}
     </div>
     {% endfor %}
   </div>
@@ -34,54 +34,40 @@
       
       <!-- 左側 Carousel -->
       <div class="col-lg-6">
-        <div class="portfolio-details-slider swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              }
-            }
-          </script>
-
-          <div class="swiper-wrapper align-items-center">
-            {% for item in object.image_set.all %}
-            <div class="swiper-slide">
-              <img src="{% static item.image_path %}" alt="">
-            </div>
-            {% endfor %}
+        <div id="radarCarousel" class="carousel slide" data-bs-ride="carousel">
+          {% block dm %}
+          {% if image %}
+          <!-- Carousel items -->
+          <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{{ image }}" class="d-block w-100" alt="{{ title }}DM">
+              </div>
           </div>
-          <div class="swiper-pagination"></div>
+          {% endif %}
+          {% endblock %}
         </div>
-      </div><!-- End 左側 Carousel -->
+      </div>
 
       <div class="col-lg-6">
-        {% if object.subnussuibTimeDesc %}
+        {% if timing %}
         <h3 class="mt-4 mb-3">
           <i class="bi bi-clock-fill me-2 text-warning"></i> 提送時機
         </h3>
-        <p>{{ object.subnussuibTimeDesc|safe }}</p>
+        <p>{{ timing|safe }}</p>
         {% endif %}
 
-        {% if object.signatureDesc %}
+        {% if range %}
         <h3 class="mt-4 mb-3">
           <i class="bi bi-geo-alt-fill me-2 text-warning"></i> 調查範圍
         </h3>
-        <p>{{ object.signatureDesc|safe }}</p>
+        <p>{{ range|safe }}</p>
         {% endif %}
 
-        {% if object.scopeOfSurveyDesc %}
+        {% if certificate %}
         <h3 class="mt-4 mb-3">
           <i class="bi bi-pencil-square me-2 text-warning"></i> 簽證
         </h3>
-        <p>{{ object.scopeOfSurveyDesc|safe }}</p>
+        <p>{{ certificate|safe }}</p>
       </div>
       {% endif %}
 
@@ -89,4 +75,5 @@
   </div>
 </div>
 </section><!-- /Portfolio Details Section -->
+{% block section2 %}{% endblock %}
 {% endblock %}
