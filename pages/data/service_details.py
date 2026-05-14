@@ -20,6 +20,20 @@ SERVICE_DETAILS = {
         "range": None,
         "certificate": '受委託專業技術團隊依附表二填具及技師簽證。<span class="text-primary">協助附表二及附表三一併填報!</span>',
         "image": "/static/pages/assets/img/services/inspection/dm_v1.png",
+        "mediae": [
+            {
+                "title": "新北市透水保水自治條例",
+                "path": "pages/assets/img/services/inspection/mediae/新北市透水保水自治條例.pdf",
+            },
+            {
+                "title": "附表2",
+                "path": "pages/assets/img/services/inspection/mediae/新北市透水保水技術規則-附表2.odt",
+            },
+            {
+                "title": "附表3",
+                "path": "pages/assets/img/services/inspection/mediae/新北市透水保水技術規則-附表3.odt",
+            },
+        ]
     },
 
     "meter": {
