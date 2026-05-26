@@ -8,7 +8,7 @@ SERVICE_DETAILS = {
     },
 
     "inspection": {
-        "title": "透水保水設施檢查",
+        "title": "透水保水檢查",
         "news_list": [
             {
                 "type": "primary",
@@ -41,6 +41,7 @@ SERVICE_DETAILS = {
         "timing": None,
         "range": None,
         "certificate": None,
+        "image": "/static/pages/assets/img/services/meter/dm_v1.png",
     },
 
     "completion": {
@@ -56,12 +57,12 @@ SERVICE_DETAILS = {
             {
                 "type": "danger",
                 "title": "NEW",
-                "context": '依據新北市政府工務局於114年3月12日發布之<span class="text-primary">「新北市政府辦理建築工程施工防救災計畫說明會作業原則」</span>，自114年4月1日起承造人應於施工前、後進行<span class="text-primary">透地雷達檢測</span>。',
+                "context": '依據新北市政府工務局於114年3月12日發布之<a href="https://www.publicwork.ntpc.gov.tw/userfiles/1060500/files/新北市建築工程辦理施工防救災計畫說明會作業原則.pdf">「新北市政府辦理建築工程施工防救災計畫說明會作業原則」</a>，自114年4月1日起承造人應於施工前、後進行<span class="text-primary">透地雷達檢測</span>。',
             },
             {
                 "type": "danger",
                 "title": "NEW",
-                "context": '依據臺北市政府於113年1月10日發布之<span class="text-primary">「臺北市建築物施工中維護公共設施管理要點」</span>，自113年1月18日起承造人應於施工前、後進行<span class="text-primary">透地雷達檢測</span>。',
+                "context": '依據臺北市政府於113年1月10日發布之<a href="https://laws.gov.taipei/Law/LawSearch/LawFileList/FL004129">「臺北市建築物施工中維護公共設施管理要點」</a>，自113年1月18日起承造人應於施工前、後進行<span class="text-primary">透地雷達檢測</span>。',
             },
         ],
         "timing": '於<span class="text-primary">放樣勘驗 、竣工勘驗前</span>提送檢測報告',

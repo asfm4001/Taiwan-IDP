@@ -33,6 +33,7 @@
 │   ├── models.py
 │   ├── static/
 │   ├── templates/
+│   ├── data/       # 常數資料
 │   ├── tests.py
 │   ├── urls.py
 │   └── views.py
@@ -46,6 +47,13 @@
 * whitenoise==6.11.0
 
 # Logs
+### 20260526
+* 調整`services`URL
+
+### 20260514
+* 將`pages.service`改回FBV，並將資料暫存至`/data`
+* 調整`pages`版面
+
 ### 20260512
 * 將Google Cloud Run轉址至[https://taiwan-idp.com/](taiwan-idp.com/)，保留原Cloud Run網址
 * 修正Django4.0以上`CSRF_TRUSTED_ORIGINS`需新增前綴"https://"
