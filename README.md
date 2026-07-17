@@ -109,15 +109,25 @@ venv與uv擇一使用即可。
    python3 manage.py migrate
    ```
     
-8. 運行Django開發伺服器
+8. 切換 開發/測試 環境
+   ```bash
+   source ./script/devp.sh
+   ```
+   |環境|DEBUG|DB|`.sh`|
+   |---|-----|--|-----|
+   |local|True|SQLite|`devp.sh`|
+   |stage|True|Postgresql|`stage.sh`|
+   |prod|False|Postgresql|-|
+
+9. 運行Django開發伺服器
    ```bash
    python3 manage.py runserver
    ```
     
-9. 瀏覽開發伺服器 http://localhost:8000
+10. 瀏覽開發伺服器 http://localhost:8000
 
-10. 停止開發伺服器 <kbd>ctrl</kbd> + <kbd>c</kbd>
-11. 退出虛擬環境
+11. 停止開發伺服器 <kbd>ctrl</kbd> + <kbd>c</kbd>
+12. 退出虛擬環境
     ```bash
     deactivate
     ```
@@ -158,14 +168,24 @@ venv與uv擇一使用即可。
    uv run manage.py migrate
    ```
     
-8. 運行Django開發伺服器
+8. 切換 開發/測試 環境
+   ```bash
+   source ./script/devp.sh
+   ```
+   |環境|DEBUG|DB|`.sh`|
+   |---|-----|--|-----|
+   |local|True|SQLite|`devp.sh`|
+   |stage|True|Postgresql|`stage.sh`|
+   |prod|False|Postgresql|-|
+
+9.  運行Django開發伺服器
    ```bash
    uv run manage.py runserver
    ```
     
-9. 瀏覽開發伺服器 http://localhost:8000
+10. 瀏覽開發伺服器 http://localhost:8000
 
-10. 停止開發伺服器 <kbd>ctrl</kbd> + <kbd>c</kbd>
+11. 停止開發伺服器 <kbd>ctrl</kbd> + <kbd>c</kbd>
     
 
 ### Testing 測試
