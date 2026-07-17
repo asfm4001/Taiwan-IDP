@@ -15,20 +15,18 @@ from dotenv import load_dotenv
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent   # /django
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# loading .env
-ENV_FILE_PATH = BASE_DIR / ".env"
-load_dotenv(ENV_FILE_PATH)
+# local loading .env
+if os.path.exists(BASE_DIR / ".env"):
+    ENV_FILE_PATH = BASE_DIR / ".env"
+    load_dotenv(ENV_FILE_PATH)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("SECRET_KEY", "DJANGO_SECRET_KEY")
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", False) == 'True'
 
 # Application definition
 
@@ -42,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'pages.apps.PagesConfig',
     'quotations.apps.QuotationsConfig',
-    # 'django_recaptcha',
 ]
 
 MIDDLEWARE = [
@@ -84,36 +81,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-DB_SERVER = os.getenv("DB_SERVER", "devp")
-
-if DB_SERVER == 'prod':
-    ALLOWED_HOSTS = [
-        "django-app-529979500146.asia-east1.run.app",   # for google cloud run
-        "taiwan-idp.com",
-        "www.taiwan-idp.com"
-                     ]   
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv("POSTGRESQL_DB_NAME"),                # 資料庫名稱
-            'USER': os.getenv("POSTGRESQL_DB_USER"),                # PostgreSQL 使用者
-            'PASSWORD': os.getenv("POSTGRESQL_DB_PASSWORD"),
-            'HOST': os.getenv("POSTGRESQL_DB_HOST"),                # DB server IP
-            'PORT': os.getenv("POSTGRESQL_DB_PORT", '5432'),        # PostgreSQL 預設 port
-        }
-    }
-else:
-    ALLOWED_HOSTS = []
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -157,27 +124,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # 輸出app static files(for
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CSRF 信任來源
-CSRF_TRUSTED_ORIGINS = [
-    "https://django-app-529979500146.asia-east1.run.app",   # for google cloud run
-    "https://taiwan-idp.com",
-    "https://www.taiwan-idp.com",
-    "http://localhost",
-    "http://127.0.0.1",
-]
-# HTTPS 設定
-SECURE_PROXY_SSL_HEADER = ("X-Forwarded-Proto", "https")
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = "Lax"
 
 # 無權限造訪轉入URL
 LOGIN_URL = '/admin'
-
-# SMTP Configuration
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'  #SMTP伺服器
-# EMAIL_PORT = 587  #TLS通訊埠號
-# EMAIL_USE_TLS = True  #開啟TLS(傳輸層安全性)
-# EMAIL_HOST_USER = os.getenv("EMAIL")  #寄件者電子郵件
-# EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")  #Gmail應用程式的密碼(含空格)
