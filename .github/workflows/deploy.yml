@@ -26,7 +26,7 @@ jobs:
     - name: Run Pytest inside Docker
       run: |
         docker run --rm \
-          -e DB_SERVER=${{ vars.DB_SERVER }} \
+          -e DJANGO_SETTINGS_MODULE=${{ vars.DJANGO_SETTINGS_MODULE }} \
           -e SECRET_KEY="${{ secrets.SECRET_KEY }}" \
           django-test-image:latest pytest -v
 
@@ -72,7 +72,7 @@ jobs:
           --image $IMAGE_NAME \
           --vpc-connector ${{ secrets.GCP_CONNECTOR_NAME }} \
           --region ${{ secrets.GCP_REGION }} \
-          --set-env-vars "DB_SERVER=${{ vars.DB_SERVER }},SECRET_KEY=${{ secrets.SECRET_KEY }},POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }},POSTGRESQL_DB_PORT=${{ secrets.POSTGRESQL_DB_PORT }}" \
+          --set-env-vars "DJANGO_SETTINGS_MODULE=${{ vars.DJANGO_SETTINGS_MODULE }},SECRET_KEY=${{ secrets.SECRET_KEY }},POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }},POSTGRESQL_DB_PORT=${{ secrets.POSTGRESQL_DB_PORT }}" \
           --tasks 1 \
           --command python \
           --args manage.py,migrate \
@@ -82,7 +82,7 @@ jobs:
           --image $IMAGE_NAME \
           --vpc-connector ${{ secrets.GCP_CONNECTOR_NAME }} \
           --region ${{ secrets.GCP_REGION }} \
-          --set-env-vars "DB_SERVER=${{ vars.DB_SERVER }},SECRET_KEY=${{ secrets.SECRET_KEY }},POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }},POSTGRESQL_DB_PORT=${{ secrets.POSTGRESQL_DB_PORT }}" \
+          --set-env-vars "DJANGO_SETTINGS_MODULE=${{ vars.DJANGO_SETTINGS_MODULE }},SECRET_KEY=${{ secrets.SECRET_KEY }},POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }},POSTGRESQL_DB_PORT=${{ secrets.POSTGRESQL_DB_PORT }}" \
           --tasks 1 \
           --command python \
           --args manage.py,migrate \
@@ -104,4 +104,4 @@ jobs:
           --region ${{ secrets.GCP_REGION }} \
           --platform managed \
           --allow-unauthenticated \
-          --set-env-vars "DB_SERVER=${{ vars.DB_SERVER }},SECRET_KEY=${{ secrets.SECRET_KEY }},POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }},POSTGRESQL_DB_PORT=${{ secrets.POSTGRESQL_DB_PORT }}"
+          --set-env-vars "DJANGO_SETTINGS_MODULE=${{ vars.DJANGO_SETTINGS_MODULE }},SECRET_KEY=${{ secrets.SECRET_KEY }},POSTGRESQL_DB_NAME=${{ secrets.POSTGRESQL_DB_NAME }},POSTGRESQL_DB_USER=${{ secrets.POSTGRESQL_DB_USER }},POSTGRESQL_DB_PASSWORD=${{ secrets.POSTGRESQL_DB_PASSWORD }},POSTGRESQL_DB_HOST=${{ secrets.POSTGRESQL_DB_HOST }},POSTGRESQL_DB_PORT=${{ secrets.POSTGRESQL_DB_PORT }}"
